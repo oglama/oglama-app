@@ -1,6 +1,6 @@
 /*!
  * @architect Mark Jivko <mark@oglama.com>
- * @copyright © 2024 Oglama https://oglama.com
+ * @copyright © 2024-2025 Oglama https://oglama.com
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,56 +14,55 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var V = Object.defineProperty;
-var b = s => {
+var re = Object.defineProperty;
+var M = s => {
     throw TypeError(s);
 };
-var X = (s, e, t) => (e in s ? V(s, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : (s[e] = t));
-var f = (s, e) => () => (e || s((e = { exports: {} }).exports, e), e.exports);
-var r = (s, e, t) => X(s, typeof e != "symbol" ? e + "" : e, t),
-    D = (s, e, t) => e.has(s) || b("Cannot " + t);
-var i = (s, e, t) => (D(s, e, "read from private field"), t ? t.call(s) : e.get(s)),
-    h = (s, e, t) =>
-        e.has(s) ? b("Cannot add the same private member more than once") : e instanceof WeakSet ? e.add(s) : e.set(s, t),
-    v = (s, e, t, n) => (D(s, e, "write to private field"), n ? n.call(s, t) : e.set(s, t), t);
-var q = f((ge, N) => {
-    var { ipcRenderer: Y } = require("electron"),
-        y,
-        E;
-    N.exports =
-        ((E = class {
+var se = (s, e, t) => (e in s ? re(s, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : (s[e] = t));
+var _ = (s, e) => () => (e || s((e = { exports: {} }).exports, e), e.exports);
+var r = (s, e, t) => se(s, typeof e != "symbol" ? e + "" : e, t),
+    S = (s, e, t) => e.has(s) || M("Cannot " + t);
+var n = (s, e, t) => (S(s, e, "read from private field"), t ? t.call(s) : e.get(s)),
+    p = (s, e, t) =>
+        e.has(s) ? M("Cannot add the same private member more than once") : e instanceof WeakSet ? e.add(s) : e.set(s, t),
+    y = (s, e, t, i) => (S(s, e, "write to private field"), i ? i.call(s, t) : e.set(s, t), t);
+var v = _((Te, E) => {
+    var { ipcRenderer: ie } = require("electron"),
+        I,
+        C;
+    E.exports =
+        ((C = class {
             constructor() {
-                h(this, y, {});
+                p(this, I, {});
             }
             _register(e) {
                 if (typeof e == "string")
                     for (let t of Object.getOwnPropertyNames(this))
                         ["_", "#"].includes(t[0]) ||
                             typeof this[t] != "function" ||
-                            (i(this, y)[t] = "ipc:".concat(e, ":").concat(t));
+                            (n(this, I)[t] = "ipc:".concat(e, ":").concat(t));
             }
             _runner(e, ...t) {
-                let n = function (o, l, c) {
+                let i = function (o, l, c) {
                     this.run = async function () {
                         let a = null;
-                        if ((typeof i(o, y)[l] == "string" && (a = await Y.invoke(i(o, y)[l], ...c)), a instanceof Error))
-                            throw new Error("IPC/".concat(i(o, y)[l], " ").concat(a));
+                        if ((typeof n(o, I)[l] == "string" && (a = await ie.invoke(n(o, I)[l], ...c)), a instanceof Error))
+                            throw new Error("IPC/".concat(n(o, I)[l], " ").concat(a));
                         return a;
                     };
                 };
-                return new n(this, e, t);
+                return new i(this, e, t);
             }
             async _promise(e, ...t) {
                 return await this._runner(e, ...t).run();
             }
         }),
-        (y = new WeakMap()),
-        E);
+        (I = new WeakMap()),
+        C);
 });
-var A = f((ye, M) => {
-    var Z = q(),
-        { ipcRenderer: ee } = require("electron");
-    M.exports = class extends Z {
+var W = _((be, A) => {
+    var ne = v();
+    A.exports = class extends ne {
         constructor() {
             super();
             r(this, "getOS", () => this._promise("getOS"));
@@ -72,206 +71,258 @@ var A = f((ye, M) => {
             r(this, "getSerialNumber", () => this._promise("getSerialNumber"));
             r(this, "setPostAuth", t => this._promise("setPostAuth", !!t));
             r(this, "getPostAuth", () => this._promise("getPostAuth"));
-            r(this, "testing", () => {
-                window.setInterval(() => {
-                    ee.send("win:main", "testing", [new Date().getTime()], { type: "req", fromWin: "" });
-                }, 1500);
-            });
             this._register("device");
         }
     };
 });
-var S = f((Pe, W) => {
-    var te = q();
-    W.exports = class extends te {
+var j = _((Me, R) => {
+    var oe = v();
+    R.exports = class extends oe {
+        constructor() {
+            super();
+            r(this, "list", () => this._promise("list"));
+            r(this, "closeAll", () => this._promise("closeAll"));
+            r(this, "open", t => this._promise("open", t));
+            r(this, "close", t => this._promise("close", t));
+            r(this, "webContents", (t, i, o) => this._promise("webContents", t, i, o));
+            this._register("source");
+        }
+    };
+});
+var U = _((Ee, L) => {
+    var ae = v();
+    L.exports = class extends ae {
         constructor() {
             super();
             r(this, "list", () => this._promise("list"));
             r(this, "removeAll", () => this._promise("removeAll"));
-            r(this, "add", (t, n, o = !1) => this._promise("add", t, n, o));
+            r(this, "add", (t, i, o = !1) => this._promise("add", t, i, o));
             r(this, "remove", t => this._promise("remove", t));
             r(this, "select", t => this._promise("select", t));
             r(this, "getSelected", () => this._promise("getSelected"));
-            r(this, "webContents", (t, n, o) => this._promise("webContents", t, n, o));
+            r(this, "openDevTools", t => this._promise("openDevTools", t));
+            r(this, "webContents", (t, i, o) => this._promise("webContents", t, i, o));
             this._register("target");
         }
     };
 });
-var R = f((qe, C) => {
-    var re = q();
-    C.exports = class extends re {
+var H = _((Re, G) => {
+    var ce = v();
+    G.exports = class extends ce {
         constructor() {
             super();
             r(this, "openExternal", t => this._promise("openExternal", "".concat(t)));
-            this._register("login");
+            this._register("main/login");
         }
     };
 });
-var U = f((ke, j) => {
-    var se = q();
-    j.exports = class extends se {
+var z = _((Ue, B) => {
+    var le = v(),
+        pe = H();
+    B.exports = class extends le {
         constructor() {
             super();
+            r(this, "login", null);
             r(this, "setOnTop", t => this._promise("setOnTop", !!t));
             r(this, "getOnTop", () => this._promise("getOnTop"));
             r(this, "setDarkMode", t => this._promise("setDarkMode", !!t));
             r(this, "getDarkMode", () => this._promise("getDarkMode"));
             r(this, "quit", () => this._promise("quit"));
             r(this, "openExternal", t => this._promise("openExternal", "".concat(t)));
-            this._register("main");
+            this._register("main"), (this.login = new pe());
         }
     };
 });
-var x = f((be, G) => {
-    var u;
-    G.exports =
-        ((u = class {
+var q = _((He, F) => {
+    var h;
+    F.exports =
+        ((h = class {
+            static getSourceChannelName(e) {
+                return "".concat(h.WINDOW_SOURCE, "/").concat(e);
+            }
             static getTargetChannelName(e) {
-                return "".concat(u.WINDOW_TARGET, "/").concat(e);
+                return "".concat(h.WINDOW_TARGET, "/").concat(e);
             }
         }),
-        r(u, "WINDOW_MAIN", "@main"),
-        r(u, "WINDOW_LOGIN", "@login"),
-        r(u, "WINDOW_TARGET", "@target"),
-        u);
+        r(h, "WINDOW_MAIN", "@main"),
+        r(h, "WINDOW_MAIN_LOGIN", "@main/login"),
+        r(h, "WINDOW_SOURCE", "@source"),
+        r(h, "WINDOW_TARGET", "@target"),
+        h);
 });
-var z = f((Ne, H) => {
-    var { ipcRenderer: T, contextBridge: ie } = require("electron"),
-        ne = require("crypto"),
-        oe = A(),
-        ae = S(),
-        ce = R(),
-        le = U(),
-        L = x(),
-        p,
-        P,
-        _,
+var D = _((Fe, K) => {
+    var { ipcRenderer: N, contextBridge: he } = require("electron"),
+        _e = require("crypto"),
+        ue = W(),
+        de = j(),
+        me = U(),
+        ge = z(),
+        b = q(),
+        u,
+        $,
+        m,
         w,
-        B;
-    H.exports =
-        ((B = class {
+        J;
+    K.exports =
+        ((J = class {
             constructor(e, t = !0) {
-                h(this, p, "");
-                h(this, P, {});
-                h(this, _, {});
-                h(this, w, {});
-                r(this, "target", {
-                    send: (e, t, n) => {
-                        this.send(L.getTargetChannelName(e), t, n);
+                p(this, u, "");
+                p(this, $, {});
+                p(this, m, {});
+                p(this, w, {});
+                r(this, "source", {
+                    send: (e, t, i) => {
+                        this.send(b.getSourceChannelName(e), t, i);
                     },
-                    invoke: async (e, t, n, o = 0) => await this.invoke(L.getTargetChannelName(e), t, n, o)
+                    invoke: async (e, t, i, o = 0) => await this.invoke(b.getSourceChannelName(e), t, i, o)
                 });
-                let n = this;
-                v(this, p, e),
-                    v(this, w, {
+                r(this, "target", {
+                    send: (e, t, i) => {
+                        this.send(b.getTargetChannelName(e), t, i);
+                    },
+                    invoke: async (e, t, i, o = 0) => await this.invoke(b.getTargetChannelName(e), t, i, o)
+                });
+                let i = this;
+                y(this, u, e),
+                    y(this, w, {
                         ibc: {
                             handle: (...o) => this.handle.call(this, ...o),
                             send: (...o) => this.send.call(this, ...o),
                             invoke: async (...o) => await this.invoke.call(this, ...o),
+                            source: {
+                                send: (...o) => this.source.send.call(this, ...o),
+                                invoke: async (...o) => await this.source.invoke.call(this, ...o)
+                            },
                             target: {
                                 send: (...o) => this.target.send.call(this, ...o),
                                 invoke: async (...o) => await this.target.invoke.call(this, ...o)
                             },
-                            winName: i(this, p)
+                            winName: n(this, u)
                         },
-                        ipc: { device: new oe(), target: new ae(), login: new ce(), main: new le() },
+                        ipc: { device: new ue(), source: new de(), target: new me(), main: new ge() },
                         devMode: !1
                     }),
-                    T.on(i(this, p), (o, l) => {
+                    N.on(n(this, u), (o, l) => {
                         if (l.length < 3) return;
-                        let [c, a, k] = l,
-                            { type: d, fromWin: g, promiseId: O } = k ?? {};
+                        let [c, a, x] = l,
+                            { type: d, fromWin: g, promiseId: T } = x ?? {};
                         if (d === "req")
                             (async () => {
-                                let m = null;
+                                let f = null;
                                 try {
-                                    if (typeof c != "string" || typeof i(n, P)[c] != "function")
+                                    if (typeof c != "string" || typeof n(i, $)[c] != "function")
                                         throw new Error("Inter-browser communication handle not declared");
-                                    Array.isArray(a) || (a = []), (m = await i(n, P)[c](...a));
-                                } catch ($) {
-                                    let Q = "".concat(g, " >> ").concat(i(n, p), "/").concat(c, "()");
-                                    (m = new Error("".concat(Q, " ").concat($))),
-                                        i(this, w).devMode && console.warn("".concat(m));
+                                    Array.isArray(a) || (a = []), (f = await n(i, $)[c](...a));
+                                } catch (k) {
+                                    let te = "".concat(g, " >> ").concat(n(i, u), "/").concat(c, "()");
+                                    (f = new Error("".concat(te, " ").concat(k))),
+                                        n(this, w).devMode && console.warn("".concat(f));
                                 }
-                                typeof g == "string" && typeof O == "string" && T.send(g, c, m, { type: "res", promiseId: O });
+                                typeof g == "string" && typeof T == "string" && N.send(g, c, f, { type: "res", promiseId: T });
                             })();
                         else {
-                            let m = typeof O == "string" ? "".concat(c, ":").concat(O) : null;
-                            if (m !== null) {
-                                let $ = i(n, _)[m] ?? null;
-                                $ !== null && (a instanceof Error ? $.reject(a) : $.resolve(a), delete i(n, _)[m]);
+                            let f = typeof T == "string" ? "".concat(c, ":").concat(T) : null;
+                            if (f !== null) {
+                                let k = n(i, m)[f] ?? null;
+                                k !== null && (a instanceof Error ? k.reject(a) : k.resolve(a), delete n(i, m)[f]);
                             }
                         }
                     }),
-                    t && ie.exposeInMainWorld("sdk", i(this, w));
+                    t && he.exposeInMainWorld("sdk", n(this, w));
             }
             getSdk() {
-                return i(this, w);
+                return n(this, w);
             }
             handle(e, t) {
-                typeof e == "string" && typeof t == "function" && (i(this, P)[e] = t);
+                typeof e == "string" && typeof t == "function" && (n(this, $)[e] = t);
             }
-            send(e, t, n) {
+            send(e, t, i) {
                 do {
                     if (typeof e != "string" || typeof t != "string") break;
-                    Array.isArray(n) || (n = []), T.send(e, t, n, { type: "req", fromWin: i(this, p) });
+                    Array.isArray(i) || (i = []), N.send(e, t, i, { type: "req", fromWin: n(this, u) });
                 } while (!1);
             }
-            async invoke(e, t, n, o = 0) {
+            async invoke(e, t, i, o = 0) {
                 let l = this;
                 if (typeof e != "string" || typeof t != "string") return null;
-                Array.isArray(n) || (n = []);
+                Array.isArray(i) || (i = []);
                 let c = parseInt(o, 10);
                 (isNaN(c) || c < 0) && (c = 0);
                 let a = (() => {
                         let d = Date.now().toString(36),
-                            g = ne.randomBytes(4).toString("hex");
+                            g = _e.randomBytes(4).toString("hex");
                         return "".concat(d).concat(g);
                     })(),
-                    k = new Promise((d, g) => {
-                        i(this, _)["".concat(t, ":").concat(a)] = { resolve: d, reject: g };
+                    x = new Promise((d, g) => {
+                        n(this, m)["".concat(t, ":").concat(a)] = { resolve: d, reject: g };
                     });
                 return (
                     c > 0 &&
                         setTimeout(() => {
                             let d = typeof a == "string" ? "".concat(t, ":").concat(a) : null;
-                            if (typeof i(l, _)[d] < "u") {
+                            if (typeof n(l, m)[d] < "u") {
                                 try {
-                                    i(l, _)[d].reject(
-                                        new Error("".concat(i(l, p), " >> ").concat(e, "/").concat(t, "() Timed out"))
+                                    n(l, m)[d].reject(
+                                        new Error("".concat(n(l, u), " >> ").concat(e, "/").concat(t, "() Timed out"))
                                     );
                                 } catch {}
-                                delete i(l, _)[d];
+                                delete n(l, m)[d];
                             }
                         }, c),
-                    T.send(e, t, n, { type: "req", fromWin: i(this, p), promiseId: a }),
-                    k
+                    N.send(e, t, i, { type: "req", fromWin: n(this, u), promiseId: a }),
+                    x
                 );
             }
         }),
-        (p = new WeakMap()),
-        (P = new WeakMap()),
-        (_ = new WeakMap()),
+        (u = new WeakMap()),
+        ($ = new WeakMap()),
+        (m = new WeakMap()),
         (w = new WeakMap()),
-        B);
+        J);
 });
-var K = f((We, J) => {
-    var pe = z(),
-        de = x(),
-        I,
-        F;
-    J.exports =
-        ((F = class {
+var X = _((Qe, V) => {
+    var fe = D(),
+        ye = q(),
+        P,
+        Q;
+    V.exports =
+        ((Q = class {
             constructor() {
-                h(this, I);
-                r(this, "getOnTop", async () => await i(this, I).ipc.main.getOnTop());
-                r(this, "setOnTop", async e => await i(this, I).ipc.main.setOnTop(e));
-                v(this, I, new pe(de.WINDOW_MAIN).getSdk());
-                for (let e of Object.getOwnPropertyNames(this)) typeof this[e] == "function" && i(this, I).ibc.handle(e, this[e]);
+                p(this, P);
+                r(this, "getOnTop", async () => await n(this, P).ipc.main.getOnTop());
+                r(this, "setOnTop", async e => await n(this, P).ipc.main.setOnTop(e));
+                y(this, P, new fe(ye.WINDOW_MAIN).getSdk());
+                for (let e of Object.getOwnPropertyNames(this)) typeof this[e] == "function" && n(this, P).ibc.handle(e, this[e]);
             }
         }),
-        (I = new WeakMap()),
-        F);
+        (P = new WeakMap()),
+        Q);
 });
-var he = K();
-new he();
+var ee = _((Ye, Z) => {
+    var Ie = D(),
+        we = q(),
+        O,
+        Y;
+    Z.exports =
+        ((Y = class {
+            constructor() {
+                p(this, O);
+                r(this, "getOnTop", async () => await n(this, O).ipc.main.login.getOnTop());
+                r(this, "setOnTop", async e => await n(this, O).ipc.main.login.setOnTop(e));
+                y(this, O, new Ie(we.WINDOW_MAIN_LOGIN).getSdk());
+                for (let e of Object.getOwnPropertyNames(this)) typeof this[e] == "function" && n(this, O).ibc.handle(e, this[e]);
+            }
+        }),
+        (O = new WeakMap()),
+        Y);
+});
+var Pe = X(),
+    Oe = ee(),
+    ve = process.argv.filter(s => s.indexOf("--win-type=") >= 0).shift();
+switch ("".concat(ve).split("=")[1]) {
+    case "main/login":
+        new Oe();
+        break;
+    default:
+        new Pe();
+}
