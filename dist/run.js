@@ -496,12 +496,12 @@ var El = g((_x, yl) => {
     "use strict";
     var t0 = require("os"),
         wl = require("tty"),
-        qe = gl(),
+        Le = gl(),
         { env: ae } = process,
         ot;
-    qe("no-color") || qe("no-colors") || qe("color=false") || qe("color=never")
+    Le("no-color") || Le("no-colors") || Le("color=false") || Le("color=never")
         ? (ot = 0)
-        : (qe("color") || qe("colors") || qe("color=true") || qe("color=always")) && (ot = 1);
+        : (Le("color") || Le("colors") || Le("color=true") || Le("color=always")) && (ot = 1);
     "FORCE_COLOR" in ae &&
         (ae.FORCE_COLOR === "true"
             ? (ot = 1)
@@ -513,8 +513,8 @@ var El = g((_x, yl) => {
     }
     function wo(e, t) {
         if (ot === 0) return 0;
-        if (qe("color=16m") || qe("color=full") || qe("color=truecolor")) return 3;
-        if (qe("color=256")) return 2;
+        if (Le("color=16m") || Le("color=full") || Le("color=truecolor")) return 3;
+        if (Le("color=256")) return 2;
         if (e && !t && ot === void 0) return 0;
         let r = ot || 0;
         if (ae.TERM === "dumb") return r;
@@ -1546,7 +1546,7 @@ var ql = g(Ln => {
         function L(h) {
             return h === '"' || h === "'";
         }
-        function Fe(h) {
+        function qe(h) {
             return h === ">" || N(h);
         }
         function Y(h, u) {
@@ -2263,7 +2263,7 @@ var ql = g(Ln => {
                             : F(u, "Invalid attribute name");
                         continue;
                     case y.ATTRIB_VALUE_UNQUOTED:
-                        if (!Fe(w)) {
+                        if (!qe(w)) {
                             w === "&" ? (u.state = y.ATTRIB_VALUE_ENTITY_U) : (u.attribValue += w);
                             continue;
                         }
@@ -2780,7 +2780,7 @@ var Vl = g((Fx, Gl) => {
                               var C;
                               if (T && typeof T == "function") {
                                   var N = 0;
-                                  C = function (L, Fe, Y) {
+                                  C = function (L, qe, Y) {
                                       if (L && L.code === "EAGAIN" && N < 10) return N++, c.call(e, m, p, E, _, A, C);
                                       T.apply(this, arguments);
                                   };
@@ -3089,7 +3089,7 @@ var _e = g((Ux, Po) => {
     Po.exports = No(K0(Z));
     process.env.TEST_GRACEFUL_FS_GLOBAL_PATCH && !Z.__patched && ((Po.exports = No(Z)), (Z.__patched = !0));
     function No(e) {
-        X0(e), (e.gracefulify = No), (e.createReadStream = Fe), (e.createWriteStream = Y);
+        X0(e), (e.gracefulify = No), (e.createReadStream = qe), (e.createWriteStream = Y);
         var t = e.readFile;
         e.readFile = r;
         function r(P, U, R) {
@@ -3227,7 +3227,7 @@ var _e = g((Ux, Po) => {
                 U ? (P.destroy(), P.emit("error", U)) : ((P.fd = R), P.emit("open", R));
             });
         }
-        function Fe(P, U) {
+        function qe(P, U) {
             return new e.ReadStream(P, U);
         }
         function Y(P, U) {
@@ -6902,18 +6902,18 @@ var Wh = g((ZI, jh) => {
         };
     jh.exports = Vv;
 });
-var Le = g((eN, Vh) => {
+var Ue = g((eN, Vh) => {
     var Gh = we(),
         Yv = (e, t, r) => new Gh(e, r).compare(new Gh(t, r));
     Vh.exports = Yv;
 });
 var zh = g((tN, Yh) => {
-    var zv = Le(),
+    var zv = Ue(),
         Xv = (e, t, r) => zv(t, e, r);
     Yh.exports = Xv;
 });
 var Jh = g((rN, Xh) => {
-    var Jv = Le(),
+    var Jv = Ue(),
         Kv = (e, t) => Jv(e, t, !0);
     Xh.exports = Kv;
 });
@@ -6937,32 +6937,32 @@ var rd = g((oN, td) => {
     td.exports = rA;
 });
 var rn = g((sN, nd) => {
-    var nA = Le(),
+    var nA = Ue(),
         iA = (e, t, r) => nA(e, t, r) > 0;
     nd.exports = iA;
 });
 var gi = g((aN, id) => {
-    var oA = Le(),
+    var oA = Ue(),
         sA = (e, t, r) => oA(e, t, r) < 0;
     id.exports = sA;
 });
 var Os = g((lN, od) => {
-    var aA = Le(),
+    var aA = Ue(),
         lA = (e, t, r) => aA(e, t, r) === 0;
     od.exports = lA;
 });
 var xs = g((uN, sd) => {
-    var uA = Le(),
+    var uA = Ue(),
         cA = (e, t, r) => uA(e, t, r) !== 0;
     sd.exports = cA;
 });
 var wi = g((cN, ad) => {
-    var fA = Le(),
+    var fA = Ue(),
         hA = (e, t, r) => fA(e, t, r) >= 0;
     ad.exports = hA;
 });
 var yi = g((fN, ld) => {
-    var dA = Le(),
+    var dA = Ue(),
         pA = (e, t, r) => dA(e, t, r) <= 0;
     ld.exports = pA;
 });
@@ -7052,7 +7052,7 @@ var dd = g((pN, hd) => {
     };
     hd.exports = Ns;
 });
-var Ue = g((mN, wd) => {
+var $e = g((mN, wd) => {
     var TA = /\s+/g,
         Rs = class e {
             constructor(t, r) {
@@ -7481,10 +7481,10 @@ var nn = g((gN, Sd) => {
         Ds = Is(),
         Fs = tn(),
         vd = we(),
-        Ad = Ue();
+        Ad = $e();
 });
 var sn = g((wN, Cd) => {
-    var VA = Ue(),
+    var VA = $e(),
         YA = (e, t, r) => {
             try {
                 t = new VA(t, r);
@@ -7496,7 +7496,7 @@ var sn = g((wN, Cd) => {
     Cd.exports = YA;
 });
 var bd = g((yN, Td) => {
-    var zA = Ue(),
+    var zA = $e(),
         XA = (e, t) =>
             new zA(e, t).set.map(r =>
                 r
@@ -7509,7 +7509,7 @@ var bd = g((yN, Td) => {
 });
 var xd = g((EN, Od) => {
     var JA = we(),
-        KA = Ue(),
+        KA = $e(),
         QA = (e, t, r) => {
             let n = null,
                 i = null,
@@ -7530,7 +7530,7 @@ var xd = g((EN, Od) => {
 });
 var Nd = g((_N, Id) => {
     var ZA = we(),
-        eS = Ue(),
+        eS = $e(),
         tS = (e, t, r) => {
             let n = null,
                 i = null,
@@ -7551,7 +7551,7 @@ var Nd = g((_N, Id) => {
 });
 var Dd = g((vN, Pd) => {
     var Ls = we(),
-        rS = Ue(),
+        rS = $e(),
         Rd = rn(),
         nS = (e, t) => {
             e = new rS(e, t);
@@ -7584,7 +7584,7 @@ var Dd = g((vN, Pd) => {
     Pd.exports = nS;
 });
 var qd = g((AN, Fd) => {
-    var iS = Ue(),
+    var iS = $e(),
         oS = (e, t) => {
             try {
                 return new iS(e, t).range || "*";
@@ -7598,7 +7598,7 @@ var vi = g((SN, kd) => {
     var sS = we(),
         $d = nn(),
         { ANY: aS } = $d,
-        lS = Ue(),
+        lS = $e(),
         uS = sn(),
         Ld = rn(),
         Ud = gi(),
@@ -7649,13 +7649,13 @@ var jd = g((TN, Hd) => {
     Hd.exports = gS;
 });
 var Vd = g((bN, Gd) => {
-    var Wd = Ue(),
+    var Wd = $e(),
         wS = (e, t, r) => ((e = new Wd(e, r)), (t = new Wd(t, r)), e.intersects(t, r));
     Gd.exports = wS;
 });
 var zd = g((ON, Yd) => {
     var yS = sn(),
-        ES = Le();
+        ES = Ue();
     Yd.exports = (e, t, r) => {
         let n = [],
             i = null,
@@ -7680,11 +7680,11 @@ var zd = g((ON, Yd) => {
     };
 });
 var ep = g((xN, Zd) => {
-    var Xd = Ue(),
+    var Xd = $e(),
         $s = nn(),
         { ANY: Us } = $s,
         an = sn(),
-        ks = Le(),
+        ks = Ue(),
         _S = (e, t, r = {}) => {
             if (e === t) return !0;
             (e = new Xd(e, r)), (t = new Xd(t, r));
@@ -7800,7 +7800,7 @@ var Bs = g((IN, np) => {
         NS = Mh(),
         RS = Hh(),
         PS = Wh(),
-        DS = Le(),
+        DS = Ue(),
         FS = zh(),
         qS = Jh(),
         LS = mi(),
@@ -7815,7 +7815,7 @@ var Bs = g((IN, np) => {
         GS = Is(),
         VS = fd(),
         YS = nn(),
-        zS = Ue(),
+        zS = $e(),
         XS = sn(),
         JS = bd(),
         KS = xd(),
@@ -8796,7 +8796,7 @@ var wt = g(dr => {
         return [ia("".concat(e.pathname.replace(new RegExp(nb(r), "g"), t), ".blockmap"), e), n];
     }
 });
-var $e = g(Et => {
+var ke = g(Et => {
     "use strict";
     Object.defineProperty(Et, "__esModule", { value: !0 });
     Et.Provider = void 0;
@@ -8899,7 +8899,7 @@ var ua = g(qi => {
     qi.GenericProvider = void 0;
     var tm = ue(),
         sa = wt(),
-        aa = $e(),
+        aa = ke(),
         la = class extends aa.Provider {
             constructor(t, r, n) {
                 super(n),
@@ -8948,7 +8948,7 @@ var nm = g(Li => {
     Li.BitbucketProvider = void 0;
     var rm = ue(),
         ca = wt(),
-        fa = $e(),
+        fa = ke(),
         ha = class extends fa.Provider {
             constructor(t, r, n) {
                 super({ ...n, isUseMultipleRangeRequest: !1 }), (this.configuration = t), (this.updater = r);
@@ -8995,7 +8995,7 @@ var ga = g(kt => {
         pr = Bs(),
         fb = require("url"),
         mr = wt(),
-        pa = $e(),
+        pa = ke(),
         da = /\/tag\/([^/]+)$/,
         Ui = class extends pa.Provider {
             constructor(t, r, n) {
@@ -9043,9 +9043,9 @@ var ga = g(kt => {
                             if (C === null) continue;
                             let N = C[1],
                                 L = ((n = pr.prerelease(N)) === null || n === void 0 ? void 0 : n[0]) || null,
-                                Fe = !A || ["alpha", "beta"].includes(A),
+                                qe = !A || ["alpha", "beta"].includes(A),
                                 Y = L !== null && !["alpha", "beta"].includes(String(L));
-                            if (Fe && !Y && !(A === "beta" && L === "alpha")) {
+                            if (qe && !Y && !(A === "beta" && L === "alpha")) {
                                 c = N;
                                 break;
                             }
@@ -9163,7 +9163,7 @@ var am = g($i => {
     $i.KeygenProvider = void 0;
     var sm = ue(),
         wa = wt(),
-        ya = $e(),
+        ya = ke(),
         Ea = class extends ya.Provider {
             constructor(t, r, n) {
                 super({ ...n, isUseMultipleRangeRequest: !1 }),
@@ -9218,7 +9218,7 @@ var cm = g(ki => {
         lm = require("url"),
         um = wt(),
         pb = ga(),
-        mb = $e(),
+        mb = ke(),
         _a = class extends pb.BaseGitHubProvider {
             constructor(t, r, n, i) {
                 super(t, "api.github.com", i), (this.updater = r), (this.token = n);
@@ -9916,11 +9916,11 @@ var xa = g(Yi => {
                                 d && d.beginFileCopy(), (0, Rb.copyData)(L, m, n, a, () => p(T));
                                 return;
                             }
-                            let Fe = "bytes=".concat(L.start, "-").concat(L.end - 1);
-                            (A.headers.range = Fe),
+                            let qe = "bytes=".concat(L.start, "-").concat(L.end - 1);
+                            (A.headers.range = qe),
                                 (N = (C = this.logger) === null || C === void 0 ? void 0 : C.debug) === null ||
                                     N === void 0 ||
-                                    N.call(C, "download range: ".concat(Fe)),
+                                    N.call(C, "download range: ".concat(qe)),
                                 d && d.beginRangeDownload();
                             let Y = this.httpExecutor.createRequest(A, fe => {
                                 fe.on("error", a),
@@ -10630,7 +10630,7 @@ var Ua = g(Zi => {
         Qb = vr(),
         Zb = qa(),
         Rm = jt(),
-        eO = $e(),
+        eO = ke(),
         La = class extends Qb.BaseUpdater {
             constructor(t, r) {
                 super(t, r);
@@ -10709,7 +10709,7 @@ var ka = g(eo => {
     eo.DebUpdater = void 0;
     var tO = vr(),
         Pm = jt(),
-        rO = $e(),
+        rO = ke(),
         $a = class extends tO.BaseUpdater {
             constructor(t, r) {
                 super(t, r);
@@ -10746,7 +10746,7 @@ var Ba = g(to => {
     to.RpmUpdater = void 0;
     var nO = vr(),
         Dm = jt(),
-        iO = $e(),
+        iO = ke(),
         Ma = class extends nO.BaseUpdater {
             constructor(t, r) {
                 super(t, r);
@@ -10792,7 +10792,7 @@ var ja = g(ro => {
         Um = require("path"),
         oO = require("http"),
         sO = Ji(),
-        aO = $e(),
+        aO = ke(),
         $m = require("child_process"),
         km = require("crypto"),
         Ha = class extends sO.AppUpdater {
@@ -10921,8 +10921,8 @@ var ja = g(ro => {
                             }
                             let N = E.headers.authorization.split(" ")[1],
                                 L = Buffer.from(N, "base64").toString("ascii"),
-                                [Fe, Y] = L.split(":");
-                            if (Fe !== "autoupdater" || Y !== f) {
+                                [qe, Y] = L.split(":");
+                            if (qe !== "autoupdater" || Y !== f) {
                                 (_.statusCode = 401),
                                     (_.statusMessage = "Invalid Authentication Credentials"),
                                     _.end(),
@@ -11126,7 +11126,7 @@ var Ya = g(io => {
         hO = vr(),
         dO = qa(),
         Gm = jt(),
-        pO = $e(),
+        pO = ke(),
         mO = Qe(),
         gO = jm(),
         Vm = require("url"),
@@ -11309,7 +11309,7 @@ var jt = g(M => {
             return zm.NoOpLogger;
         }
     });
-    var _O = $e();
+    var _O = ke();
     Object.defineProperty(M, "Provider", {
         enumerable: !0,
         get: function () {
@@ -12321,7 +12321,7 @@ var Lg = g((WR, qg) => {
         ee,
         Cn,
         Tn,
-        ke,
+        Me,
         Fg;
     qg.exports =
         ((Fg = class {
@@ -12329,7 +12329,7 @@ var Lg = g((WR, qg) => {
                 z(this, ee, null);
                 z(this, Cn, null);
                 z(this, Tn, !1);
-                z(this, ke, null);
+                z(this, Me, null);
                 b(this, "rootPath", tl.getAppPath());
                 b(this, "devMode", !1);
                 b(this, "log", new sx(this));
@@ -12410,10 +12410,10 @@ var Lg = g((WR, qg) => {
             mainLoginWindow() {
                 let t = this;
                 return (
-                    v(t, ke) === null &&
+                    v(t, Me) === null &&
                         (re(
                             t,
-                            ke,
+                            Me,
                             new Pg({
                                 width: t.config.getMainLoginWidth(),
                                 height: t.config.getMainLoginHeight(),
@@ -12432,17 +12432,17 @@ var Lg = g((WR, qg) => {
                                 }
                             })
                         ),
-                        v(t, ke).setMenu(null),
-                        v(t, ke).setMaxListeners(0),
-                        v(t, ke).on("closed", () => {
-                            re(t, ke, null), tl.quit();
+                        v(t, Me).setMenu(null),
+                        v(t, Me).setMaxListeners(0),
+                        v(t, Me).on("closed", () => {
+                            re(t, Me, null), tl.quit();
                         }),
                         t.main?.login?.init(),
                         t.main?.login?.view.webContents.on("did-finish-load", () => {
-                            t.getPostAuth() || v(t, ke).show();
+                            t.getPostAuth() || v(t, Me).show();
                         }),
-                        v(t, ke).setMenu(null)),
-                    v(t, ke)
+                        v(t, Me).setMenu(null)),
+                    v(t, Me)
                 );
             }
             getPostAuth() {
@@ -12468,40 +12468,41 @@ var Lg = g((WR, qg) => {
         (ee = new WeakMap()),
         (Cn = new WeakMap()),
         (Tn = new WeakMap()),
-        (ke = new WeakMap()),
+        (Me = new WeakMap()),
         Fg);
 });
-var { app: Be, BrowserWindow: dx } = require("electron"),
+var { app: Fe, BrowserWindow: dx } = require("electron"),
     { autoUpdater: il } = jt(),
     px = Lg();
-Be.disableHardwareAcceleration();
-Be.commandLine.appendSwitch("allow-insecure-localhost");
-Be.commandLine.appendSwitch("disable-renderer-backgrounding");
-Be.commandLine.appendSwitch("disable-background-timer-throttling");
-Be.commandLine.appendSwitch("disable-backgrounding-occluded-windows");
+Fe.disableHardwareAcceleration();
+Fe.commandLine.appendSwitch("disable-gpu");
+Fe.commandLine.appendSwitch("allow-insecure-localhost");
+Fe.commandLine.appendSwitch("disable-renderer-backgrounding");
+Fe.commandLine.appendSwitch("disable-background-timer-throttling");
+Fe.commandLine.appendSwitch("disable-backgrounding-occluded-windows");
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true";
 process.on("uncaughtException", e => {
     process.env.NODE_ENV === "development" && console.debug(e);
 });
-var Me = null;
+var Be = null;
 do {
-    if (!Be.requestSingleInstanceLock()) {
-        Be.quit();
+    if (!Fe.requestSingleInstanceLock()) {
+        Fe.quit();
         break;
     }
-    Be.on("second-instance", () => {
-        Me !== null &&
-            (Me.getPostAuth()
-                ? (Me.mainWindow().isMinimized() && Me.mainWindow().restore(), Me.mainWindow().show())
-                : (Me.mainLoginWindow().isMinimized() && Me.mainLoginWindow().restore(), Me.mainLoginWindow().show()));
+    Fe.on("second-instance", () => {
+        Be !== null &&
+            (Be.getPostAuth()
+                ? (Be.mainWindow().isMinimized() && Be.mainWindow().restore(), Be.mainWindow().show())
+                : (Be.mainLoginWindow().isMinimized() && Be.mainLoginWindow().restore(), Be.mainLoginWindow().show()));
     }),
-        Be.on("ready", async () => {
-            (Me = new px()),
-                Be.on("activate", () => {
-                    dx.getAllWindows().length === 0 && Me.activity.start();
+        Fe.on("ready", async () => {
+            (Be = new px()),
+                Fe.on("activate", () => {
+                    dx.getAllWindows().length === 0 && Be.activity.start();
                 }),
-                await Me.webserver.start(),
-                await Me.activity.start(),
+                await Be.webserver.start(),
+                await Be.activity.start(),
                 il.checkForUpdatesAndNotify();
         }),
         il.on("update-downloaded", () => {
@@ -12511,7 +12512,7 @@ do {
                     e.response === 0 && il.quitAndInstall();
                 });
         }),
-        Be.on("window-all-closed", () => {
-            process.platform !== "darwin" && Be.quit();
+        Fe.on("window-all-closed", () => {
+            process.platform !== "darwin" && Fe.quit();
         });
 } while (!1);
