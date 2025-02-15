@@ -11452,6 +11452,12 @@ var eg = g((pR, Zm) => {
         getMainLoginHeight() {
             return 512;
         }
+        getSourceMinWidth() {
+            return 950;
+        }
+        getSourceMinHeight() {
+            return 650;
+        }
         getPort() {
             return 7199;
         }
@@ -11850,10 +11856,10 @@ var _g = g((PR, Eg) => {
                         }
                         v(this, V)[r] = new gg({
                             show: !1,
-                            minWidth: 512,
-                            minHeight: 512,
-                            width: 800,
-                            height: 600,
+                            minWidth: this._oglama.config.getSourceMinWidth(),
+                            minHeight: this._oglama.config.getSourceMinHeight(),
+                            width: this._oglama.config.getSourceMinWidth(),
+                            height: this._oglama.config.getSourceMinHeight(),
                             icon: wg.join(this._oglama.rootPath, "res/icons/icon.png"),
                             resizable: !0,
                             fullscreenable: !1,
@@ -12242,6 +12248,9 @@ var Ng = g((BR, Ig) => {
                           this.view.webContents.setAudioMuted(!1),
                           this.view.webContents.loadURL("http://localhost:".concat(this._oglama.config.getPort(), "/")),
                           this.view.webContents.on("dom-ready", () => this.view.webContents.focus()),
+                          this.view.webContents.on("page-title-updated", (r, n) => {
+                              this._oglama.mainWindow().setTitle(n);
+                          }),
                           this._oglama.devMode &&
                               this.view.webContents.on("context-menu", (r, n) => {
                                   r.preventDefault(), this.view.webContents.openDevTools({ mode: "detach" });
