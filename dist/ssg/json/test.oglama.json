@@ -140,7 +140,7 @@
     {
       "id": "m9tpwh2d0s061vricsq",
       "key": "type-in-input-text",
-      "code": "$.log(\"Testing $.type: typing in <input type=text/>\");\n\nconst inputKey = await $.doQuery(\"[name=input-text]\");\nawait $.doHighlight(inputKey, true);\n\n// Continue typing\nawait $.doType(inputKey, \"abc\");\nawait $.doType(inputKey, \"def\");\n\nif (\"abcdef\" !== (await $.doGetValue(inputKey))) {\n\tthrow new Error(\"$.doType append failed in input[type=text]\");\n}\n\n$.tick(\"success\");\n"
+      "code": "$.log(\"Testing $.type: typing in <input type=text/>\");\n\nconst inputKey = await $.doQuery(\"[name=input-text]\");\nawait $.doHighlight(inputKey, true);\n\n// Continue typing\nawait $.doType(inputKey, \"abc\");\nawait $.doType(inputKey, \"foobar\", true);\n\nif (\"foobar\" !== (await $.doGetValue(inputKey))) {\n\tthrow new Error(\"$.doType replace failed in input[type=text]\");\n}\n\n$.tick(\"success\");\n"
     },
     {
       "id": "m9tpzklocmcy4abl4w8",
