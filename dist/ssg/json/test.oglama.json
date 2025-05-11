@@ -1,0 +1,248 @@
+{
+  "srcInputs": [
+    {
+      "id": "m7qi5iyhz1w7gfvlv0t",
+      "key": "string",
+      "type": "string",
+      "name": "String",
+      "desc": "",
+      "max": 1024,
+      "options": []
+    },
+    {
+      "id": "m7qgj10zmmc960ka4p",
+      "key": "int",
+      "type": "int",
+      "name": "Integer",
+      "desc": "",
+      "options": []
+    },
+    {
+      "id": "m7ni5ewzkjs3golvlg8",
+      "key": "bool",
+      "type": "bool",
+      "name": "Boolean",
+      "desc": ""
+    },
+    {
+      "id": "m7q9uew6rtv6aikt35",
+      "key": "optional",
+      "type": "string",
+      "name": "Optional String",
+      "desc": "",
+      "depends": "bool",
+      "max": 1024,
+      "options": [],
+      "default": "foo"
+    },
+    {
+      "id": "m7ni5gtp7yaxccnjxty",
+      "key": "table",
+      "type": "table",
+      "name": "Number of stuff",
+      "desc": "This is the number of stuff we need",
+      "columns": [
+        "subject"
+      ]
+    },
+    {
+      "id": "m7qhpfss87pedgw80w3",
+      "key": "files",
+      "type": "files",
+      "name": "Files",
+      "desc": "",
+      "extensions": [
+        "gif",
+        "png",
+        "jpeg"
+      ]
+    }
+  ],
+  "srcOutputs": [
+    {
+      "id": "m7w7h3i1z4t97sx6hvl",
+      "key": "int",
+      "type": "int",
+      "name": "Integer",
+      "desc": ""
+    },
+    {
+      "id": "m7nibci0gn3qbqgqvgm",
+      "key": "string",
+      "type": "string",
+      "name": "String",
+      "desc": "",
+      "max": 1024
+    },
+    {
+      "id": "m81uwdojrz45vo3bet",
+      "key": "bool",
+      "type": "bool",
+      "name": "Boolean",
+      "desc": ""
+    },
+    {
+      "id": "m8n3l1uuuk80i282cnk",
+      "key": "table",
+      "type": "table",
+      "name": "Table",
+      "desc": "",
+      "columns": [
+        "subject",
+        "joke"
+      ]
+    },
+    {
+      "id": "m81uwpx42qj0tfn4f3b",
+      "key": "files",
+      "type": "files",
+      "name": "Files",
+      "desc": "",
+      "extensions": [
+        "png",
+        "zip",
+        "tgz",
+        "json"
+      ]
+    }
+  ],
+  "srcFunctions": [
+    {
+      "id": "m9zvmteipolubem3oi",
+      "key": "test-navigation",
+      "code": "$.log(\"Testing $.navLoad, $.navReload, $.jiggle\");\n\n// Go home\n$.log(\"Loading about:home\");\nawait $.navLoad(\"about:home\");\nif (!(await $.navGetUrl()).match(/^about:home\\/?$/g)) {\n\tthrow new Error(\"Could not load about:home\");\n}\n\n// Go to the test page\n$.log(\"Loading about:home/test\");\nawait $.navLoad(\"about:home/test\");\nif (!(await $.navGetUrl()).match(/^about:home\\/test\\/?$/g)) {\n\tthrow new Error(\"Could not load about:home/test\");\n}\n\n// Get the page title\nconst pageTitle = await $.navGetTitle();\nif (\"string\" !== typeof pageTitle || !pageTitle.match(/^breadboard/gi)) {\n\tthrow new Error(\"$.navGetTitle failed\");\n}\n\n// Take focus\nconst inputKey = await $.doQuery(\"[name=input-text]\");\nawait $.doHighlight(inputKey, true);\nawait $.doType(inputKey, \"foo\");\n\n// Go backward - should emit a beforeunload\n$.log(\"Back to about:home\");\nawait $.navGoBack();\nif (!(await $.navGetUrl()).match(/^about:home\\/?$/g)) {\n\tthrow new Error(\"Could not go back to about:home\");\n}\n\n// Go forward\n$.log(\"Forward to about:home/test\");\nawait $.navGoForward();\nif (!(await $.navGetUrl()).match(/^about:home\\/test\\/?$/g)) {\n\tthrow new Error(\"Could not go forward to about:home/test\");\n}\n\n// Reload the page\n$.log(\"Reloading\");\nawait $.navReload();\nif (!(await $.navGetUrl()).match(/^about:home\\/test\\/?$/g)) {\n\tthrow new Error(\"Could not reload\");\n}\n"
+    },
+    {
+      "id": "mac6w5azp93pxm619nn",
+      "key": "test-jiggle",
+      "code": "$.log(\"Testing $.doGetViewportSize, $.doHoverAt, $.doJiggle\");\n\n// Go home\nawait $.navLoad(\"about:home\");\n\n// Move mouse to center\nconst viewportSize = await $.doGetViewportSize();\nif (!Number.isInteger(viewportSize.width) || !Number.isInteger(viewportSize.height)) {\n\tthrow new Error(\"$.doGetViewportSize failed\");\n}\nconst left = viewportSize.width / 2;\nconst top = viewportSize.height / 2;\nawait $.doHoverAt(left, top);\n\n// Jiggle with excitement\nawait $.doJiggle(50);\n\n// Get some wisdom\nawait $.doClickAt(left + 20, top - 20);\nawait $.sleep(1);\n"
+    },
+    {
+      "id": "m9tybxuqtuzsahi4n7p",
+      "key": "check-global-run",
+      "code": "$.log(\"Testing $.globalRun*, $.pause, $.sleep\");\n\nif (123 !== $.args[0]) {\n\tthrow new Error(\"Arguments were not passed to this function\");\n}\n\nif (!$.globalRunGet(\"agreed\")) {\n\t$.globalRunSet(\"agreed\", true);\n\n\t// Pause the script\n\t$.log(\"Waiting for user to resume\");\n\t$.pause(\"Click to continue\");\n\n\t// Test the sleep function\n\tconst startTime = new Date().getTime();\n\tawait $.sleep(0.5);\n\tif (new Date().getTime() - startTime < 500) {\n\t\tthrow new Error(\"$.sleep() has failed\");\n\t}\n}\n\n// Delete a value\n$.globalRunSet(\"random\", Math.random());\n$.globalRunSet(\"random\", null);\nif (Object.keys($.globalRunGet()).includes(\"random\")) {\n\tthrow new Error(\"$.globalRunSet() failed to delete key\");\n}\n"
+    },
+    {
+      "id": "m9vgq0xkehjsf4scjx",
+      "key": "test-box",
+      "code": "$.log(\"Testing $.doGetBox, $.doHighlightBox\");\n\nconst inputKey = await $.doQuery(\"[name=input-textfield]\");\n\n// Fetch the box\nconst box = await $.doGetBox(inputKey);\nif (null === box) {\n\tthrow new Error(\"$.doGetBox failed\");\n}\n\n// Modify the box somehow\nbox.width = 50;\nbox.height = 50;\nawait $.doHighlightBox(box);\nawait $.sleep(1);\n"
+    },
+    {
+      "id": "m9u4okf8upbbo1eaygm",
+      "key": "get-word-of-day",
+      "code": "$.log(\"Testing $.globalEnv*, $.llm\");\n\nconst today = new Date().toISOString().split(\"T\")[0];\nconst savedDay = $.globalEnvGet(\"word-day\");\nlet savedWord = $.globalEnvGet(\"word\");\n\n// Cache miss\nif (\"string\" !== typeof savedWord || today !== savedDay) {\n\tconst llmWord = await $.llm(\n\t\t`Given that today is ${today}, give me a word representing a figure, event or object that is significant for today. Answer with just 1 word.`\n\t);\n\tif (\"string\" !== typeof llmWord) {\n\t\tthrow new Error(\"$.llm() failed\");\n\t}\n\t$.globalEnvSet(\"word\", llmWord);\n\t$.globalEnvSet(\"word-day\", today);\n}\n\n// Delete a value\n$.globalEnvSet(\"random\", Math.random());\n$.globalEnvSet(\"random\", null);\nif (Object.keys($.globalEnvGet()).includes(\"random\")) {\n\tthrow new Error(\"$.globalEnvSet() failed to delete key\");\n}\n\n// Re-fetch the word\nsavedWord = $.globalEnvGet(\"word\");\nif (\"string\" !== typeof savedWord) {\n\tthrow new Error(\"$.globalEnvSet() failed\");\n}\n\nreturn savedWord;\n"
+    },
+    {
+      "id": "m95or3vb13ua9vt99bx",
+      "key": "type-in-textfield",
+      "code": "$.log(\"Testing $.type: typing in <TextField/>\");\n\nconst textfieldKey = await $.doQuery(\"[name=input-textfield]\");\nawait $.doHighlight(textfieldKey, true);\n\nawait $.doType(textfieldKey, \"abc\");\nawait $.doType(textfieldKey, \"def\");\n\nif (\"abcdef\" !== (await $.doGetValue(textfieldKey))) {\n\tthrow new Error(\"$.doType append failed in TextField\");\n}\n\n$.tick(\"success\");\n"
+    },
+    {
+      "id": "m9tpwh2d0s061vricsq",
+      "key": "type-in-input-text",
+      "code": "$.log(\"Testing $.type: typing in <input type=text/>\");\n\nconst inputKey = await $.doQuery(\"[name=input-text]\");\nawait $.doHighlight(inputKey, true);\n\n// Continue typing\nawait $.doType(inputKey, \"abc\");\nawait $.doType(inputKey, \"def\");\n\nif (\"abcdef\" !== (await $.doGetValue(inputKey))) {\n\tthrow new Error(\"$.doType append failed in input[type=text]\");\n}\n\n$.tick(\"success\");\n"
+    },
+    {
+      "id": "m9tpzklocmcy4abl4w8",
+      "key": "type-in-textfield-multiline",
+      "code": "$.log(\"Testing $.type: typing in <TextField multiline/>\");\n\nconst textfieldMultiKey = await $.doQuery(\"[name=input-textfield-multiline]\");\nawait $.doHighlight(textfieldMultiKey, true);\n\nconst text = Array.from({ length: 20 }, (_, i) => i + 1)\n\t.map(i => `${i}.\tȘș好的 Lorem ipsum. ✨\\n`)\n\t.join(\"\");\nawait $.doType(textfieldMultiKey, text, false, 250);\n\nif (!(await $.doGetValue(textfieldMultiKey)).match(/20\\.\\t/g)) {\n\tthrow new Error(\"$.doType replace failed in textarea\");\n}\n\n$.tick(\"success\");\n"
+    },
+    {
+      "id": "m9tqafktmteowyiuj8t",
+      "key": "type-in-textarea",
+      "code": "$.log(\"Testing $.type: typing in <textarea/>\");\n\nconst textareaKey = await $.doQuery(\"[name=textarea]\");\nawait $.doHighlight(textareaKey, true);\n\nconst text = Array.from({ length: 20 }, (_, i) => i + 1)\n\t.map(i => `${i}.\tȘș好的 Lorem ipsum. ✨\\n`)\n\t.join(\"\");\nawait $.doType(textareaKey, text, false, 250);\n\nif (!(await $.doGetValue(textareaKey)).match(/20\\.\\t/g)) {\n\tthrow new Error(\"$.doType replace failed in textarea\");\n}\n\n$.tick(\"success\");\n"
+    },
+    {
+      "id": "ma6ffpwytiuom7bvhqc",
+      "key": "test-alerts",
+      "code": "$.log(\"Testing $.handle* (alert, confirm, prompt)\");\n\n// Prevent the next alert from bubbling\nawait $.handleAlert();\nawait $.doClick(await $.doQuery('[data-role=\"alert\"]'));\n\n// Prevent the next prompt from failing\nawait $.handlePrompt(\"foo\");\nawait $.doClick(await $.doQuery('[data-role=\"prompt\"]'));\nconst promptResult = await $.doGetContent(await $.doQuery('[data-role=\"prompt-result\"]'));\nif (\"foo\" !== promptResult) {\n\tthrow new Error(`$.handlePrompt() failed - found ${promptResult}`);\n}\n\n// Prevent the next confirm from bubbling\nawait $.handleConfirm();\nawait $.doClick(await $.doQuery('[data-role=\"confirm\"]'));\nlet confirmResult = await $.doGetContent(await $.doQuery('[data-role=\"confirm-result\"]'));\nif (\"true\" !== confirmResult) {\n\tthrow new Error(`$.handleConfirm() failed - found ${confirmResult} instead of true`);\n}\nawait $.handleConfirm(false);\nawait $.doClick(await $.doQuery('[data-role=\"confirm\"]'));\nconfirmResult = await $.doGetContent(await $.doQuery('[data-role=\"confirm-result\"]'));\nif (\"false\" !== confirmResult) {\n\tthrow new Error(`$.handleConfirm() failed - found ${confirmResult} instead of false`);\n}\n\n// Show two toasts\nawait $.doClick(await $.doQuery('[data-role=\"alert\"]'));\nawait $.doClick(await $.doQuery('[data-role=\"confirm\"]'));\n"
+    },
+    {
+      "id": "ma0u7lsbx0sco8z9vji",
+      "key": "test-query",
+      "code": "$.log(\"Testing $.doHover, $.doClick, $.doQuery, $.doGetContent\");\n\n// Hover over head\nawait $.doHover(await $.doQuery(\"h1\"));\nawait $.doHoverAt(400, 400);\nconst clickedElKey = await $.doQuery(\".clicked-button\");\n\n// Fetch the span\nconst clickedButton = await $.doQuery(\".clicked-button\");\nif (null === clickedButton) {\n\tthrow new Error(\"$.doQuery() could not find .clicked-button span\");\n}\n\n// Click the MUI button\nconst fooButton = await $.doQuery(\".MuiButton-root\", \"foo\");\nif (null === fooButton) {\n\tthrow new Error(\"$.doQuery() could not find 'foo' button\");\n}\nawait $.doClick(fooButton);\nconst resMuiButton = await $.doGetContent(clickedElKey);\nif (\"foo\" !== resMuiButton) {\n\tthrow new Error(\"$.doClick() failed on 'foo' button\");\n}\n\n// Click the HTML button\nconst alphaButton = await $.doQuery(\"button\", \"alpha\");\nif (null === alphaButton) {\n\tthrow new Error(\"$.doQuery() could not find 'alpha' MUI button\");\n}\nawait $.doClick(alphaButton);\nconst resHtmlButton = await $.doGetContent(clickedElKey);\nif (\"alpha\" !== resHtmlButton) {\n\tthrow new Error(\"$.doClick() failed on 'alpha' HTML button\");\n}\n"
+    },
+    {
+      "id": "maayhf1ol8duj90otig",
+      "key": "test-query-parent",
+      "code": "$.log(\"Testing $.doQueryParent, $.doGetAttribute*\");\n\n// Prepare the switch\nconst switchKey = await $.doQuery(\"input[name='s1'][value='1']\");\nconst switchAttrs = await $.doGetAttributes(switchKey);\nif (\"object\" !== typeof switchAttrs || null === switchAttrs || \"1\" !== switchAttrs.value) {\n\tthrow new Error(\"$.doGetAttributes failed\");\n}\n\n// Find a vague parent\nconst parentKey = await $.doQueryParent(switchKey, \"div\", \"Switches\");\nif (\"string\" !== typeof parentKey) {\n\tthrow new Error(\"$.doQueryParent failed\");\n}\nconst parentAttr = await $.doGetAttribute(parentKey, \"data-stack\");\nif (\"switches\" !== parentAttr) {\n\tthrow new Error(\"$.doGetAttribute failed\");\n}\n"
+    },
+    {
+      "id": "madi51s23i44fuas3r2",
+      "key": "test-query-siblings",
+      "code": "$.log(\"Testing $.doQuerySiblings, $.doGetAttribute\");\n\n// Prepare the switch\nconst switchKey = await $.doQuery(\"input[name='s1'][value='1']\");\nconst switchMuiKey = await $.doQueryParent(switchKey, \".MuiSwitch-root\");\n\n// Find the siblings\nconst switchSiblings = await $.doQuerySiblings(switchMuiKey, \"span\");\nif (3 !== switchSiblings.length) {\n\tthrow new Error(\"$.doQuerySiblings failed\");\n}\nfor (const siblingKey of switchSiblings) {\n\tconst checkboxKey = await $.doQuery(\"input[type='checkbox']\", null, siblingKey);\n\tconst siblingValue = await $.doGetAttribute(checkboxKey, \"value\");\n\tif (\"1\" === siblingValue) {\n\t\tthrow new Error(\"$.doQuerySiblings captured self as sibling\");\n\t}\n}\n"
+    },
+    {
+      "id": "m9vf8pylywlh2f14c5k",
+      "key": "test-io",
+      "code": "$.log(\"Testing $.ioInput*, $.ioOutput*, $.ioSave*\");\n\n// Input integer\nconst inputInt = $.ioInputInt(\"int\");\nif (!Number.isInteger(inputInt)) {\n\tthrow new Error(`$.ioInputInt returned wrong type: ${typeof inputInt}`);\n}\nawait $.ioOutputInt(\"int\", inputInt + Math.floor(Math.random() * 100));\n\n// Input string\nconst inputString = $.ioInputString(\"string\");\nif (\"string\" !== typeof inputString) {\n\tthrow new Error(`$.ioInputString returned wrong type: ${typeof inputString}`);\n}\nawait $.ioOutputString(\"string\", `${inputString} ${Math.random()}`);\n\n// Optional input string\nconst optionalString = $.ioInputString(\"optional\");\nif (\"string\" !== typeof optionalString || !optionalString.length) {\n\tthrow new Error(\"String with default value cannot be empty\");\n}\n\n// Input boolean\nconst inputBool = $.ioInputBool(\"bool\");\nif (\"boolean\" !== typeof inputBool) {\n\tthrow new Error(`$.ioInputBool returned wrong type: ${typeof inputBool}`);\n}\nawait $.ioOutputBool(\"bool\", !!Math.floor(Math.random() * 2));\n\n// Input table\nlet row = null;\nlet rowCount = 0;\nwhile ((row = await $.ioInputRow(\"table\"))) {\n\trowCount++;\n\tif (\"string\" !== typeof row.subject) {\n\t\tthrow new Error(\"$.ioInputRow - invalid table definition\");\n\t}\n\tconst subject = row.subject;\n\tconst joke = await $.llm(`Tell me a short joke about ${subject} and one other random subject`);\n\tawait $.ioOutputRow(\"table\", { subject, joke });\n}\nif (0 === rowCount) {\n\tthrow new Error(\"$.ioInputRow did not return any row\");\n}\n\n// Input files\nconst inputFiles = $.ioInputFiles(\"files\");\nif (!Array.isArray(inputFiles) || !inputFiles.length) {\n\tthrow new Error(\"$.ioInputFiles did not return a valid array\");\n}\n\n// Save an image\nconst savePath = await $.ioSaveUrl(\"files\", \"http://localhost:7199/img/pages/page-404.png\");\nif (\"string\" !== typeof savePath) {\n\tthrow new Error(\"$.ioSaveUrl did not save the file to disk\");\n}\n"
+    },
+    {
+      "id": "mae6om1di0vraj77vf",
+      "key": "test-io-save",
+      "code": "if (!(await $.navGetUrl()).match(/test/g)) {\n\tawait $.navLoad(\"about:home/test/\");\n}\n\n$.log(\"Testing $.ioSaveText (json)\");\nawait $.ioSaveText(\"files\", JSON.stringify({ random: Math.random() }, null, 2), \"json\");\nawait $.sleep(1);\n\n$.log(\"Testing $.ioSaveDownload (png)\");\nconst srcButton = await $.doQuery('[data-role=\"dl-logo\"]');\n$.setTimeout(async () => {\n\tawait $.doClick(srcButton);\n}, 1000);\nconst savePath = await $.ioSaveDownload(\"files\");\nif (\"string\" !== typeof savePath) {\n\tthrow new Error(\"$.ioSaveDownload failed\");\n}\nawait $.sleep(1);\n\n$.log(\"Testing $.ioSaveUrl (png)\");\nconst urlPath = await $.ioSaveUrl(\"files\", \"http://localhost:7199/img/pages/page-401.png\");\nif (\"string\" !== typeof urlPath) {\n\tthrow new Error(\"$.ioSaveUrl failed\");\n}\nawait $.sleep(1);\n\n$.log(\"Testing $.ioSaveRequest (json)\");\nconst reqPath = await $.ioSaveRequest(\"files\", \"http://localhost:7199/manifest.json\");\nif (\"string\" !== typeof reqPath) {\n\tthrow new Error(\"$.ioSaveRequest failed\");\n}\nawait $.sleep(1);\n"
+    },
+    {
+      "id": "ma87gt30m7walok5peq",
+      "key": "test-select",
+      "code": "$.log(\"Testing $.select\");\n\n// Select a single value\nconst simpleSelect = await $.doQuery(\"[data-role=select]\");\nawait $.doSelect(simpleSelect, 3);\nconst simpleSelectValue = await $.doGetValue(simpleSelect);\nif (\"3\" !== simpleSelectValue) {\n\tthrow new Error(\"$.doSelect() failed for a single value\");\n}\n\n// Select a multiple values\nconst multiSelect = await $.doQuery(\"[data-role=select-multi]\");\nawait $.doSelect(multiSelect, [3, 5]);\nconst multiSelectValue = await $.doGetValue(multiSelect);\nif (!Array.isArray(multiSelectValue) || \"3,5\" !== multiSelectValue.join(\",\")) {\n\tthrow new Error(\"$.doSelect() failed for multiple values\");\n}\n"
+    },
+    {
+      "id": "ma8g1lied1t731oe2q7",
+      "key": "test-checkbox",
+      "code": "$.log(\"Testing $.check: MUI and HTML checkboxes\");\n\n// MUI checkboxes\nconst muiCheckbox = await $.doQuery(\"input[type=checkbox][name=s1]\");\nawait $.doCheck(muiCheckbox, [2, 4]);\nconst muiCheckboxValue = await $.doGetValue(muiCheckbox);\nif (!Array.isArray(muiCheckboxValue) || \"2,4\" !== muiCheckboxValue.join(\",\")) {\n\tthrow new Error(\"$.check failed for MUI checkbox\");\n}\n\n// HTML checkboxes\nconst htmlCheckbox = await $.doQuery(\"input[type=checkbox][name=c1]\");\nawait $.doCheck(htmlCheckbox, [2, 4]);\nconst htmlCheckboxValue = await $.doGetValue(htmlCheckbox);\nif (!Array.isArray(htmlCheckboxValue) || \"2,4\" !== htmlCheckboxValue.join(\",\")) {\n\tthrow new Error(\"$.check failed for HTML checkbox\");\n}\n"
+    },
+    {
+      "id": "ma99xsi11nej87mux9i",
+      "key": "test-radio",
+      "code": "$.log(\"Testing $.check: MUI and HTML radios\");\n\n// MUI radios\nconst muiRadio = await $.doQuery(\"input[type=radio][name=r1]\");\nawait $.doCheck(muiRadio, 2);\nconst muiRadioValue = await $.doGetValue(muiRadio);\nif (\"2\" !== muiRadioValue) {\n\tthrow new Error(\"$.check failed for MUI radio\");\n}\n\n// HTML radios\nconst htmlRadio = await $.doQuery(\"input[type=radio][name=r2]\");\nawait $.doCheck(htmlRadio, 2);\nconst htmlRadioValue = await $.doGetValue(htmlRadio);\nif (\"2\" !== htmlRadioValue) {\n\tthrow new Error(\"$.check failed for HTML radio\");\n}\n"
+    },
+    {
+      "id": "ma9hgs9hy8sjbl9cor",
+      "key": "test-await-present",
+      "code": "$.log(\"Testing $.doAwait*Present\");\n\nconst cssSelector = \"#alert-present\";\nconst btnToggle = await $.doQuery('[data-role=\"toggle-present\"]');\n\n// Automatically hide alert if present\nconst elKey = await $.doQuery(cssSelector);\nif (null !== elKey) {\n\tawait $.doClick(btnToggle);\n}\n\n// Wait for element present\n$.setTimeout(async () => await $.doClick(btnToggle), 1000);\nconst alertPresent = await $.doAwaitPresent(cssSelector, null, null, 5);\nif (!Array.isArray(alertPresent)) {\n\tthrow new Error(\"$.doAwaitPresent failed\");\n}\n\n// Timeout on \"element not present\"\nconst checkPresent = await $.doAwaitNotPresent(alertPresent[0], 1);\nif (false !== checkPresent) {\n\tthrow new Error(\"$.doAwaitNotPresent did not time out\");\n}\n\n// Wait for element not present\n$.setTimeout(async () => await $.doClick(btnToggle), 1000);\nconst resRemoved = await $.doAwaitNotPresent(alertPresent[0], 5);\nif (!resRemoved) {\n\tthrow new Error(\"$.doAwaitNotPresent failed\");\n}\n\n// Timeout on \"element present\"\nconst recheckPresent = await $.doAwaitPresent(cssSelector, null, null, 1);\nif (false !== recheckPresent) {\n\tthrow new Error(\"$.doAwaitPresent did not time out\");\n}\n"
+    },
+    {
+      "id": "ma9nnox91osubfphnqj",
+      "key": "test-await-visible",
+      "code": "$.log(\"Testing $.doAwait*Visible\");\n\nconst elKey = await $.doQuery(\"#alert-visible\");\nconst btnToggle = await $.doQuery('[data-role=\"toggle-visible\"]');\n\n// Automatically hide alert if visible\nlet alertVisible = await $.doGetVisible(elKey);\nif (alertVisible) {\n\tawait $.doClick(btnToggle);\n}\n\n// Wait for elKey visible\n$.setTimeout(async () => await $.doClick(btnToggle), 1000);\nalertVisible = await $.doAwaitVisible(elKey, 5);\nif (!alertVisible) {\n\tthrow new Error(\"$.doAwaitVisible failed\");\n}\n\n// Timeout on \"element not visible\"\nconst checkVisible = await $.doAwaitNotVisible(elKey, 1);\nif (false !== checkVisible) {\n\tthrow new Error(\"$.doAwaitNotVisible did not time out\");\n}\n\n// Wait for elKey not visible\n$.setTimeout(async () => await $.doClick(btnToggle), 1000);\nconst resHidden = await $.doAwaitNotVisible(elKey, 5);\nif (!resHidden) {\n\tthrow new Error(\"$.doAwaitNotVisible failed\");\n}\n\n// Timeout on \"element visible\"\nconst recheckVisible = await $.doAwaitVisible(elKey, 1);\nif (false !== recheckVisible) {\n\tthrow new Error(\"$.doAwaitVisible did not time out\");\n}\n"
+    },
+    {
+      "id": "mac7jezsj8jigbrd20p",
+      "key": "test-coordinate-actions",
+      "code": "// Scroll down\nawait $.doScroll(50);\n\n// Scroll back up\nawait $.doScroll(-50);\n\n// Scroll to buttons\nawait $.doScrollTo(await $.doQuery(\"h2\", \"buttons\"));\n\n// Hover to the top-left corner\nawait $.doHoverAt(50, 20);\nconst element = await $.doQueryAt(50, 20, \"h2\");\nif (null === element) {\n\tthrow new Error(\"$.doQueryAt failed\");\n}\n\n// It's clear the element is in viewport\nif (!(await $.doGetInViewport(element))) {\n\tthrow new Error(\"$.doGetInViewport failed - buttons heading is in viewport\");\n}\n\nif (await $.doGetInViewport(await $.doQuery(\"h1\"))) {\n\tthrow new Error(\"$.doGetInViewport failed - breadboard heading is not in viewport\");\n}\n\nawait $.doClickAt(50, 20, true);\nawait $.doClickAt(250, 20);\n"
+    },
+    {
+      "id": "madiii3g3rs2a04ztiw",
+      "key": "test-choose-files",
+      "code": "$.log(\"Testing $.doChooseFiles\");\n\nconst filesKey = await $.doQuery(\"input[type='file']\");\n\n// Bring into view\nawait $.doScrollTo(filesKey);\n\n// Fetch input\nconst filePaths = $.ioInputFiles(\"files\");\nif (filePaths.length) {\n\tawait $.doChooseFiles(filesKey, filePaths);\n\tconst filesValue = await $.doGetValue(filesKey);\n\tif (filePaths.length !== filesValue.length) {\n\t\tthrow new Error(\"$.doChooseFiles failed\");\n\t}\n}\n"
+    }
+  ],
+  "srcStateMachine": [
+    {
+      "id": "m7dnph7abjd1lpo21n5",
+      "key": "start",
+      "code": "// Start testing\nif ($.args.length && $.args[0]) {\n\t$.log(`Returned successfully from ${$.previous}`, \"success\");\n\treturn;\n}\n\n$.log(\"Testing started...\", \"success\");\n\n// Check $.globalRun*(), $.pause(), $.sleep(), $.tick()\nawait $.fn(\"check-global-run\", [123]);\n\n// Test the jiggle\nawait $.fn(\"test-jiggle\");\n\n// Test the navigation\nawait $.fn(\"test-navigation\");\n\n// Check $.doHighlight*(), $.doGetBox()\nawait $.fn(\"test-box\");\n\n// Begin the first test\nreturn { next: \"test-llm\" };\n"
+    },
+    {
+      "id": "m9u49sepq65kfbpqud",
+      "key": "test-llm",
+      "code": "// Test $.llm(), $.globalEnv*()\nconst wordOfDay = await $.fn(\"get-word-of-day\");\n$.log(`The word of the day is: ${wordOfDay}`);\n\nreturn { next: \"test-input-output\" };\n"
+    },
+    {
+      "id": "m9u4zh2687zmp8j0d6s",
+      "key": "test-input-output",
+      "code": "// Test $.io*\nawait $.fn(\"test-io\");\nawait $.fn(\"test-io-save\");\n\nreturn { next: \"test-html\" };\n"
+    },
+    {
+      "id": "ma0u85iimwkg4xi94ha",
+      "key": "test-html",
+      "code": "// Test $.doAwait*, $.doQuery*, $.handle*, $.doSelect, $.doCheck\nawait $.fn(\"test-await-present\");\nawait $.fn(\"test-await-visible\");\nawait $.fn(\"test-query\");\nawait $.fn(\"test-query-parent\");\nawait $.fn(\"test-query-siblings\");\nawait $.fn(\"test-choose-files\");\nawait $.fn(\"test-coordinate-actions\");\nawait $.fn(\"test-alerts\");\nawait $.fn(\"test-select\");\nawait $.fn(\"test-checkbox\");\nawait $.fn(\"test-radio\");\n\nreturn { next: \"test-typing\" };\n"
+    },
+    {
+      "id": "m9tpxi8unfx15b2bgno",
+      "key": "test-typing",
+      "code": "// Test $.doType(), $.doGetValue()\n\n// Test inputs\nawait $.fn(\"type-in-textfield\");\nawait $.fn(\"type-in-input-text\");\n\n// Test textareas\nawait $.fn(\"type-in-textfield-multiline\");\nawait $.fn(\"type-in-textarea\");\n\nreturn { next: \"start\", args: [true] };\n"
+    }
+  ]
+}

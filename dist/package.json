@@ -1,8 +1,8 @@
 {
     "name": "oglama",
-    "version": "0.0.79",
+    "version": "0.0.80",
     "description": "Private, community-driven web automation",
-    "homepage": "https://oglama",
+    "homepage": "https://oglama/",
     "author": "Oglama",
     "main": "run.js",
     "res": true,
