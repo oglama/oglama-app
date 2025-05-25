@@ -20,7 +20,7 @@ This product uses third party software in accordance with their respective licen
 
   * **[argparse](https://npmjs.com/package/argparse)** `v.2.0.1` ⚖️ license: [Python-2.0](./lic/argparse.license.md)
   * **[builder-util-runtime](https://npmjs.com/package/builder-util-runtime)** `v.9.2.10` ⚖️ license: [MIT](./lic/builder-util-runtime.license.md) • author: Vladimir Krivosheev
-  * **[debug](https://npmjs.com/package/debug)** `v.4.4.0` ⚖️ license: [MIT](./lic/debug.license.md) • author: Josh Junon (https://github.com/qix-)
+  * **[debug](https://npmjs.com/package/debug)** `v.4.4.1` ⚖️ license: [MIT](./lic/debug.license.md) • author: Josh Junon (https://github.com/qix-)
   * **[electron-updater](https://npmjs.com/package/electron-updater)** `v.6.3.9` ⚖️ license: [MIT](./lic/electron-updater.license.md) • author: Vladimir Krivosheev
   * **[graceful-fs](https://npmjs.com/package/graceful-fs)** `v.4.2.11` ⚖️ license: [ISC](./lic/graceful-fs.license.md)
   * **[js-yaml](https://npmjs.com/package/js-yaml)** `v.4.1.0` ⚖️ license: [MIT](./lic/js-yaml.license.md) • author: Vladimir Zapparov <dervus.grim@gmail.com>

@@ -148,22 +148,22 @@
     {
       "id": "m95or3vb13ua9vt99bx",
       "key": "type-in-textfield",
-      "code": "$.log(\"Testing $.type: typing in <TextField/>\");\n\nconst textfieldKey = await $.doQuery(\"[name=input-textfield]\");\nawait $.doHighlight(textfieldKey, true);\n\nawait $.doType(textfieldKey, \"abc\");\nawait $.doType(textfieldKey, \"def\");\n\nif (\"abcdef\" !== (await $.doGetValue(textfieldKey))) {\n\tthrow new Error(\"$.doType append failed in TextField\");\n}\n\n$.tick(\"success\");\n"
+      "code": "$.log(\"Testing $.doType: typing in <TextField/>\");\n\nconst textfieldKey = await $.doQuery(\"[name=input-textfield]\");\nawait $.doHighlight(textfieldKey, true);\n\nawait $.doType(textfieldKey, \"abc\");\nawait $.doType(textfieldKey, \"def\");\n\nif (\"abcdef\" !== (await $.doGetValue(textfieldKey))) {\n\tthrow new Error(\"$.doType append failed in TextField\");\n}\n\n$.tick(\"success\");\n"
     },
     {
       "id": "m9tpwh2d0s061vricsq",
       "key": "type-in-input-text",
-      "code": "$.log(\"Testing $.type: typing in <input type=text/>\");\n\nconst inputKey = await $.doQuery(\"[name=input-text]\");\nawait $.doHighlight(inputKey, true);\n\n// Continue typing\nawait $.doType(inputKey, \"abc\");\nawait $.doType(inputKey, \"foobar\", true);\n\nif (\"foobar\" !== (await $.doGetValue(inputKey))) {\n\tthrow new Error(\"$.doType replace failed in input[type=text]\");\n}\n\n$.tick(\"success\");\n"
+      "code": "$.log(\"Testing $.doType: typing in <input type=text/>\");\n\nconst inputKey = await $.doQuery(\"[name=input-text]\");\nawait $.doHighlight(inputKey, true);\n\n// Continue typing\nawait $.doType(inputKey, \"abc\");\nawait $.doType(inputKey, \"foobar\", true);\nif (\"foobar\" !== (await $.doGetValue(inputKey))) {\n\tthrow new Error(\"$.doType replace failed in input[type=text]\");\n}\n\n// Fetch the box\nconst { left, top, width, height } = await $.doGetBox(inputKey);\n\n// Type in the middle of the box\nawait $.doTypeAt(left + width / 2, top + height / 2, \"baz\", true);\nif (\"baz\" !== (await $.doGetValue(inputKey))) {\n\tthrow new Error(\"$.doTypeAt replace failed in input[type=text]\");\n}\n\n$.tick(\"success\");\n"
     },
     {
       "id": "m9tpzklocmcy4abl4w8",
       "key": "type-in-textfield-multiline",
-      "code": "$.log(\"Testing $.type: typing in <TextField multiline/>\");\n\nconst textfieldMultiKey = await $.doQuery(\"[name=input-textfield-multiline]\");\nawait $.doHighlight(textfieldMultiKey, true);\n\nconst text = Array.from({ length: 20 }, (_, i) => i + 1)\n\t.map(i => `${i}.\tȘș好的 Lorem ipsum. ✨\\n`)\n\t.join(\"\");\nawait $.doType(textfieldMultiKey, text, true, 250);\n\nif (!(await $.doGetValue(textfieldMultiKey)).match(/20\\.\\t/g)) {\n\tthrow new Error(\"$.doType failed in textarea\");\n}\n\n// Append text\nawait $.doType(textfieldMultiKey, \"foobar\", false);\nif (!(await $.doGetValue(textfieldMultiKey)).match(/20\\.\\t.*?foobar$/gms)) {\n\tthrow new Error(\"$.doType append failed in textarea\");\n}\n\n$.tick(\"success\");\n"
+      "code": "$.log(\"Testing $.doType: typing in <TextField multiline/>\");\n\nconst textfieldMultiKey = await $.doQuery(\"[name=input-textfield-multiline]\");\nawait $.doHighlight(textfieldMultiKey, true);\n\nconst text = Array.from({ length: 20 }, (_, i) => i + 1)\n\t.map(i => `${i}.\tȘș好的 Lorem ipsum. ✨\\n`)\n\t.join(\"\");\nawait $.doType(textfieldMultiKey, text, true, 250);\n\nif (!(await $.doGetValue(textfieldMultiKey)).match(/20\\.\\t/g)) {\n\tthrow new Error(\"$.doType failed in textarea\");\n}\n\n// Append text\nawait $.doType(textfieldMultiKey, \"foobar\", false);\nif (!(await $.doGetValue(textfieldMultiKey)).match(/20\\.\\t.*?foobar$/gms)) {\n\tthrow new Error(\"$.doType append failed in textarea\");\n}\n\n$.tick(\"success\");\n"
     },
     {
       "id": "m9tqafktmteowyiuj8t",
       "key": "type-in-textarea",
-      "code": "$.log(\"Testing $.type: typing in <textarea/>\");\n\nconst textareaKey = await $.doQuery(\"[name=textarea]\");\nawait $.doHighlight(textareaKey, true);\n\nconst text = Array.from({ length: 20 }, (_, i) => i + 1)\n\t.map(i => `${i}.\tȘș好的 Lorem ipsum. ✨\\n`)\n\t.join(\"\");\nawait $.doType(textareaKey, text, true, 250);\n\nif (!(await $.doGetValue(textareaKey)).match(/20\\.\\t/g)) {\n\tthrow new Error(\"$.doType failed in textarea\");\n}\n\nawait $.doType(textareaKey, text, true);\nif ((await $.doGetValue(textareaKey)).match(/20\\.\\t.*?20\\.\\t/gms)) {\n\tthrow new Error(\"$.doType replace failed in textarea\");\n}\n\n$.tick(\"success\");\n"
+      "code": "$.log(\"Testing $.doType: typing in <textarea/>\");\n\nconst textareaKey = await $.doQuery(\"[name=textarea]\");\nawait $.doHighlight(textareaKey, true);\n\nconst text = Array.from({ length: 20 }, (_, i) => i + 1)\n\t.map(i => `${i}.\tȘș好的 Lorem ipsum. ✨\\n`)\n\t.join(\"\");\nawait $.doType(textareaKey, text, true, 250);\n\nif (!(await $.doGetValue(textareaKey)).match(/20\\.\\t/g)) {\n\tthrow new Error(\"$.doType failed in textarea\");\n}\n\nawait $.doType(textareaKey, text, true);\nif ((await $.doGetValue(textareaKey)).match(/20\\.\\t.*?20\\.\\t/gms)) {\n\tthrow new Error(\"$.doType replace failed in textarea\");\n}\n\n$.tick(\"success\");\n"
     },
     {
       "id": "ma6ffpwytiuom7bvhqc",
@@ -194,6 +194,11 @@
       "id": "mae6om1di0vraj77vf",
       "key": "test-io-save",
       "code": "if (!(await $.navGetUrl()).match(/test/g)) {\n\tawait $.navLoad(\"about:home/test/\");\n}\n\n$.log(\"Testing $.ioSaveText (json)\");\nawait $.ioSaveText(\"binary\", JSON.stringify({ random: Math.random() }, null, 2), \"json\");\nawait $.sleep(1);\n\n$.log(\"Testing $.ioSaveDownload (png)\");\nconst srcButton = await $.doQuery('[data-role=\"dl-logo\"]');\n$.setTimeout(async () => {\n\tawait $.doClick(srcButton);\n}, 1000);\nconst savePath = await $.ioSaveDownload(\"images\");\nif (\"string\" !== typeof savePath) {\n\tthrow new Error(\"$.ioSaveDownload failed\");\n}\nawait $.sleep(1);\n\n$.log(\"Testing $.ioSaveUrl (png)\");\nconst urlPath = await $.ioSaveUrl(\"images\", \"http://localhost:7199/img/pages/page-401.png\");\nif (\"string\" !== typeof urlPath) {\n\tthrow new Error(\"$.ioSaveUrl failed\");\n}\nawait $.sleep(1);\n\n$.log(\"Testing $.ioSaveRequest (json)\");\nconst reqPath = await $.ioSaveRequest(\"binary\", \"http://localhost:7199/manifest.json\");\nif (\"string\" !== typeof reqPath) {\n\tthrow new Error(\"$.ioSaveRequest failed\");\n}\nawait $.sleep(1);\n"
+    },
+    {
+      "id": "mb11hk1cgip3xel81x",
+      "key": "test-do-request",
+      "code": "$.log(\"Testing $.doRequest\");\nconst url = \"http://localhost:7199/manifest.json\";\n\nconst resJSON = await $.doRequest(url);\nif (\"object\" !== typeof resJSON || null == resJSON || \"Oglama\" !== resJSON.name) {\n\tthrow new Error(\"$.doRequest failed for JSON response\");\n}\n\nconst resString = await $.doRequest(url, \"GET\", null, null, false);\nif (\"string\" !== typeof resString || !resString.length || !resString.match(/\"Oglama\"/g)) {\n\tthrow new Error(\"$.doRequest failed for string response\");\n}\n"
     },
     {
       "id": "ma87gt30m7walok5peq",
@@ -245,7 +250,7 @@
     {
       "id": "m9u4zh2687zmp8j0d6s",
       "key": "test-input-output",
-      "code": "// Test $.io*\nawait $.fn(\"test-io\");\nawait $.fn(\"test-io-save\");\n\nreturn { next: \"test-html\" };\n"
+      "code": "// Test $.io*\nawait $.fn(\"test-io\");\nawait $.fn(\"test-io-save\");\nawait $.fn(\"test-do-request\");\n\nreturn { next: \"test-html\" };\n"
     },
     {
       "id": "ma0u85iimwkg4xi94ha",
