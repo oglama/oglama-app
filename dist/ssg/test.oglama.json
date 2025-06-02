@@ -1,122 +1,29 @@
 {
-  "srcInputs": [
+  "srcStateMachine": [
     {
-      "id": "m7qi5iyhz1w7gfvlv0t",
-      "key": "string",
-      "type": "string",
-      "name": "String",
-      "desc": "",
-      "max": 1024,
-      "options": []
+      "id": "m7dnph7abjd1lpo21n5",
+      "key": "start",
+      "code": "// Start testing\nif ($.args.length && $.args[0]) {\n\t$.log(`Returned successfully from ${$.previous}`, \"success\");\n\treturn;\n}\n\n$.log(\"Testing started...\", \"success\");\n\n// Check $.globalRun*(), $.pause(), $.sleep(), $.tick()\nawait $.fn(\"check-global-run\", [123]);\n\n// Test the jiggle\nawait $.fn(\"test-jiggle\");\n\n// Test the navigation\nawait $.fn(\"test-navigation\");\n\n// Check $.doHighlight*(), $.doGetBox()\nawait $.fn(\"test-box\");\n\n// Begin the first test\nreturn { next: \"test-llm\" };\n"
     },
     {
-      "id": "m7qgj10zmmc960ka4p",
-      "key": "int",
-      "type": "int",
-      "name": "Integer",
-      "desc": "",
-      "options": []
+      "id": "m9u49sepq65kfbpqud",
+      "key": "test-llm",
+      "code": "// Test $.llm(), $.globalEnv*()\nconst wordOfDay = await $.fn(\"get-word-of-day\");\n$.log(`The word of the day is: ${wordOfDay}`);\n\nreturn { next: \"test-input-output\" };\n"
     },
     {
-      "id": "m7ni5ewzkjs3golvlg8",
-      "key": "bool",
-      "type": "bool",
-      "name": "Boolean",
-      "desc": ""
+      "id": "m9u4zh2687zmp8j0d6s",
+      "key": "test-input-output",
+      "code": "// Test $.io*\nawait $.fn(\"test-io\");\nawait $.fn(\"test-io-save\");\nawait $.fn(\"test-do-request\");\n\nreturn { next: \"test-html\" };\n"
     },
     {
-      "id": "m7q9uew6rtv6aikt35",
-      "key": "optional",
-      "type": "string",
-      "name": "Optional String",
-      "desc": "",
-      "depends": "bool",
-      "max": 1024,
-      "options": [],
-      "default": "foo"
+      "id": "ma0u85iimwkg4xi94ha",
+      "key": "test-html",
+      "code": "// Test $.doAwait*, $.doQuery*, $.handle*, $.doSelect, $.doCheck\nawait $.fn(\"test-await-present\");\nawait $.fn(\"test-await-visible\");\nawait $.fn(\"test-query\");\nawait $.fn(\"test-query-parent\");\nawait $.fn(\"test-query-siblings\");\nawait $.fn(\"test-choose-files\");\nawait $.fn(\"test-coordinate-actions\");\nawait $.fn(\"test-alerts\");\nawait $.fn(\"test-select\");\nawait $.fn(\"test-checkbox\");\nawait $.fn(\"test-radio\");\n\nreturn { next: \"test-typing\" };\n"
     },
     {
-      "id": "m7ni5gtp7yaxccnjxty",
-      "key": "table",
-      "type": "table",
-      "name": "Number of stuff",
-      "desc": "This is the number of stuff we need",
-      "columns": [
-        "subject"
-      ]
-    },
-    {
-      "id": "m7qhpfss87pedgw80w3",
-      "key": "files",
-      "type": "files",
-      "name": "Files",
-      "desc": "",
-      "extensions": [
-        "gif",
-        "png",
-        "jpeg"
-      ]
-    }
-  ],
-  "srcOutputs": [
-    {
-      "id": "m7w7h3i1z4t97sx6hvl",
-      "key": "int",
-      "type": "int",
-      "name": "Integer",
-      "desc": ""
-    },
-    {
-      "id": "m7nibci0gn3qbqgqvgm",
-      "key": "string",
-      "type": "string",
-      "name": "String",
-      "desc": "",
-      "max": 1024
-    },
-    {
-      "id": "m81uwdojrz45vo3bet",
-      "key": "bool",
-      "type": "bool",
-      "name": "Boolean",
-      "desc": ""
-    },
-    {
-      "id": "m8n3l1uuuk80i282cnk",
-      "key": "table",
-      "type": "table",
-      "name": "Table",
-      "desc": "",
-      "columns": [
-        "subject",
-        "joke"
-      ]
-    },
-    {
-      "id": "m81uwpx42qj0tfn4f3b",
-      "key": "images",
-      "type": "files",
-      "name": "Images",
-      "desc": "",
-      "extensions": [
-        "png",
-        "jpg",
-        "jpeg",
-        "gif",
-        "webp"
-      ]
-    },
-    {
-      "id": "mal24jbxam1sx44n0ld",
-      "key": "binary",
-      "type": "files",
-      "name": "Binary",
-      "desc": "",
-      "extensions": [
-        "zip",
-        "tgz",
-        "json"
-      ]
+      "id": "m9tpxi8unfx15b2bgno",
+      "key": "test-typing",
+      "code": "// Test $.doType(), $.doGetValue()\n\n// Test inputs\nawait $.fn(\"type-in-textfield\");\nawait $.fn(\"type-in-input-text\");\n\n// Test textareas\nawait $.fn(\"type-in-textfield-multiline\");\nawait $.fn(\"type-in-textarea\");\n\nreturn { next: \"start\", args: [true] };\n"
     }
   ],
   "srcFunctions": [
@@ -236,31 +143,128 @@
       "code": "$.log(\"Testing $.doChooseFiles\");\n\nconst filesKey = await $.doQuery(\"input[type='file']\");\n\n// Bring into view\nawait $.doScrollTo(filesKey);\n\n// Fetch input\nconst filePaths = $.ioInputFiles(\"files\");\nif (filePaths.length) {\n\tawait $.doChooseFiles(filesKey, filePaths);\n\tconst filesValue = await $.doGetValue(filesKey);\n\tif (filePaths.length !== filesValue.length) {\n\t\tthrow new Error(\"$.doChooseFiles failed\");\n\t}\n}\n"
     }
   ],
-  "srcStateMachine": [
+  "srcInputs": [
     {
-      "id": "m7dnph7abjd1lpo21n5",
-      "key": "start",
-      "code": "// Start testing\nif ($.args.length && $.args[0]) {\n\t$.log(`Returned successfully from ${$.previous}`, \"success\");\n\treturn;\n}\n\n$.log(\"Testing started...\", \"success\");\n\n// Check $.globalRun*(), $.pause(), $.sleep(), $.tick()\nawait $.fn(\"check-global-run\", [123]);\n\n// Test the jiggle\nawait $.fn(\"test-jiggle\");\n\n// Test the navigation\nawait $.fn(\"test-navigation\");\n\n// Check $.doHighlight*(), $.doGetBox()\nawait $.fn(\"test-box\");\n\n// Begin the first test\nreturn { next: \"test-llm\" };\n"
+      "id": "m7qi5iyhz1w7gfvlv0t",
+      "key": "string",
+      "type": "string",
+      "name": "String",
+      "desc": "",
+      "max": 1024,
+      "options": []
     },
     {
-      "id": "m9u49sepq65kfbpqud",
-      "key": "test-llm",
-      "code": "// Test $.llm(), $.globalEnv*()\nconst wordOfDay = await $.fn(\"get-word-of-day\");\n$.log(`The word of the day is: ${wordOfDay}`);\n\nreturn { next: \"test-input-output\" };\n"
+      "id": "m7qgj10zmmc960ka4p",
+      "key": "int",
+      "type": "int",
+      "name": "Integer",
+      "desc": "",
+      "options": []
     },
     {
-      "id": "m9u4zh2687zmp8j0d6s",
-      "key": "test-input-output",
-      "code": "// Test $.io*\nawait $.fn(\"test-io\");\nawait $.fn(\"test-io-save\");\nawait $.fn(\"test-do-request\");\n\nreturn { next: \"test-html\" };\n"
+      "id": "m7ni5ewzkjs3golvlg8",
+      "key": "bool",
+      "type": "bool",
+      "name": "Boolean",
+      "desc": ""
     },
     {
-      "id": "ma0u85iimwkg4xi94ha",
-      "key": "test-html",
-      "code": "// Test $.doAwait*, $.doQuery*, $.handle*, $.doSelect, $.doCheck\nawait $.fn(\"test-await-present\");\nawait $.fn(\"test-await-visible\");\nawait $.fn(\"test-query\");\nawait $.fn(\"test-query-parent\");\nawait $.fn(\"test-query-siblings\");\nawait $.fn(\"test-choose-files\");\nawait $.fn(\"test-coordinate-actions\");\nawait $.fn(\"test-alerts\");\nawait $.fn(\"test-select\");\nawait $.fn(\"test-checkbox\");\nawait $.fn(\"test-radio\");\n\nreturn { next: \"test-typing\" };\n"
+      "id": "m7q9uew6rtv6aikt35",
+      "key": "optional",
+      "type": "string",
+      "name": "Optional String",
+      "desc": "",
+      "depends": "bool",
+      "max": 32,
+      "options": [
+        "foo",
+        "bar",
+        "baz"
+      ],
+      "default": "bar"
     },
     {
-      "id": "m9tpxi8unfx15b2bgno",
-      "key": "test-typing",
-      "code": "// Test $.doType(), $.doGetValue()\n\n// Test inputs\nawait $.fn(\"type-in-textfield\");\nawait $.fn(\"type-in-input-text\");\n\n// Test textareas\nawait $.fn(\"type-in-textfield-multiline\");\nawait $.fn(\"type-in-textarea\");\n\nreturn { next: \"start\", args: [true] };\n"
+      "id": "m7ni5gtp7yaxccnjxty",
+      "key": "table",
+      "type": "table",
+      "name": "Number of stuff",
+      "desc": "This is the number of stuff we need",
+      "columns": [
+        "subject"
+      ]
+    },
+    {
+      "id": "m7qhpfss87pedgw80w3",
+      "key": "files",
+      "type": "files",
+      "name": "Files",
+      "desc": "",
+      "extensions": [
+        "gif",
+        "png",
+        "jpeg"
+      ]
+    }
+  ],
+  "srcOutputs": [
+    {
+      "id": "m7w7h3i1z4t97sx6hvl",
+      "key": "int",
+      "type": "int",
+      "name": "Integer",
+      "desc": ""
+    },
+    {
+      "id": "m7nibci0gn3qbqgqvgm",
+      "key": "string",
+      "type": "string",
+      "name": "String",
+      "desc": "",
+      "max": 1024
+    },
+    {
+      "id": "m81uwdojrz45vo3bet",
+      "key": "bool",
+      "type": "bool",
+      "name": "Boolean",
+      "desc": ""
+    },
+    {
+      "id": "m8n3l1uuuk80i282cnk",
+      "key": "table",
+      "type": "table",
+      "name": "Table",
+      "desc": "",
+      "columns": [
+        "subject",
+        "joke"
+      ]
+    },
+    {
+      "id": "m81uwpx42qj0tfn4f3b",
+      "key": "images",
+      "type": "files",
+      "name": "Images",
+      "desc": "",
+      "extensions": [
+        "png",
+        "jpg",
+        "jpeg",
+        "gif",
+        "webp"
+      ]
+    },
+    {
+      "id": "mal24jbxam1sx44n0ld",
+      "key": "binary",
+      "type": "files",
+      "name": "Binary",
+      "desc": "",
+      "extensions": [
+        "zip",
+        "tgz",
+        "json"
+      ]
     }
   ]
 }
