@@ -110,7 +110,7 @@
     {
       "id": "ma87gt30m7walok5peq",
       "key": "test-select",
-      "code": "$.log(\"Testing $.select\");\n\n// Select a single value\nconst simpleSelect = await $.doQuery(\"[data-role=select]\");\nawait $.doSelect(simpleSelect, 3);\nconst simpleSelectValue = await $.doGetValue(simpleSelect);\nif (\"3\" !== simpleSelectValue) {\n\tthrow new Error(\"$.doSelect() failed for a single value\");\n}\n\n// Select a multiple values\nconst multiSelect = await $.doQuery(\"[data-role=select-multi]\");\nawait $.doSelect(multiSelect, [3, 5]);\nconst multiSelectValue = await $.doGetValue(multiSelect);\nif (!Array.isArray(multiSelectValue) || \"3,5\" !== multiSelectValue.join(\",\")) {\n\tthrow new Error(\"$.doSelect() failed for multiple values\");\n}\n"
+      "code": "$.log(\"Testing $.select\");\n\n// Select a single value\nconst simpleSelect = await $.doQuery(\"[data-role=select]\");\nawait $.doSelect(simpleSelect, 8);\nconst simpleSelectValue = await $.doGetValue(simpleSelect);\nif (\"8\" !== simpleSelectValue) {\n\tthrow new Error(\"$.doSelect() failed for a single value\");\n}\n\n// Select a multiple values\nconst multiSelect = await $.doQuery(\"[data-role=select-multi]\");\nawait $.doSelect(multiSelect, [3, 15]);\nconst multiSelectValue = await $.doGetValue(multiSelect);\nif (!Array.isArray(multiSelectValue) || \"3,15\" !== multiSelectValue.join(\",\")) {\n\tthrow new Error(\"$.doSelect() failed for multiple values\");\n}\n"
     },
     {
       "id": "ma8g1lied1t731oe2q7",
