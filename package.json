@@ -1,0 +1,90 @@
+{
+    "name": "oglama.com",
+    "version": "0.0.113",
+    "description": "Private, community-driven web automation",
+    "author": "Oglama",
+    "license": "Apache-2.0",
+    "private": true,
+    "main": "run.js",
+    "scripts": {
+        "start": "electron ./dist/run.js",
+        "lint": "eslint --fix --cache \"tools/**/*.js\"",
+        "format": "prettier --write \"tools/**/*.js\" \"dist/lib/**/*.js\" \"dist/run.js\"",
+        "build": "node tools/build"
+    },
+    "build": {
+        "asar": true,
+        "appId": "Oglama",
+        "productName": "Oglama",
+        "copyright": "Copyright © 2024-2025 Oglama",
+        "directories": {
+            "output": "out"
+        },
+        "afterPack": "./tools/build-hooks/after-pack.js",
+        "files": [
+            "!**/CODE-OF-CONDUCT.md",
+            "!**/CONTRIBUTING.md",
+            "!**/node_modules/**",
+            "!**/jsconfig.json",
+            "!**/*.config.js",
+            "!**/README.md",
+            "!**/tools/**",
+            "!**/dist/**",
+            "!**/.*"
+        ],
+        "mac": {
+            "icon": "dist/res/icons/icon.icns",
+            "artifactName": "${productName}-${version}.${ext}",
+            "target": [
+                "dmg",
+                "zip"
+            ],
+            "category": "public.app-category.utilities"
+        },
+        "win": {
+            "icon": "dist/res/icons/icon.ico",
+            "artifactName": "${productName}-${version}-setup.${ext}",
+            "target": "nsis"
+        },
+        "linux": {
+            "icon": "dist/res/icons/icon.png",
+            "artifactName": "${productName}-${version}.${ext}",
+            "target": "deb",
+            "category": "Utility",
+            "maintainer": "Oglama <hello@oglama.com>",
+            "description": "Private, community-driven web automation"
+        },
+        "nsis": {
+            "oneClick": false,
+            "perMachine": true,
+            "allowToChangeInstallationDirectory": true,
+            "installerIcon": "dist/res/icons/icon.ico",
+            "uninstallerIcon": "dist/res/icons/icon.ico",
+            "createDesktopShortcut": true,
+            "createStartMenuShortcut": true
+        },
+        "publish": [
+            {
+                "provider": "github",
+                "owner": "oglama",
+                "repo": "oglama-app",
+                "releaseType": "release"
+            }
+        ]
+    },
+    "devDependencies": {
+        "@electron/asar": "^3.2.13",
+        "asar": "^3.2.0",
+        "cross-spawn": "^7.0.6",
+        "electron": "^31.3.0",
+        "electron-builder": "^25.0.5",
+        "eslint": "^8.21.0",
+        "eslint-config-google": "^0.14.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-import-resolver-alias": "^1.1.2",
+        "eslint-plugin-import": "^2.26.0",
+        "eslint-plugin-prettier": "^4.2.1",
+        "eslint-plugin-unused-imports": "^2.0.0",
+        "prettier": "^2.7.1"
+    }
+}

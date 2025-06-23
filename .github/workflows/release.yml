@@ -1,0 +1,54 @@
+name: Release application
+
+on:
+    workflow_dispatch:
+    push:
+        branches:
+            - "main"
+
+jobs:
+    build:
+        runs-on: ${{ matrix.os }}
+        if: ${{ github.event_name == 'workflow_dispatch' || startsWith( github.event.head_commit.message, '[release]' ) }}
+        strategy:
+            matrix:
+                os: [ubuntu-latest, windows-latest, macos-latest]
+
+        steps:
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20"
+
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Cache node_modules
+              uses: actions/cache@v4
+              with:
+                  path: node_modules
+                  key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
+                  restore-keys: |
+                      ${{ runner.os }}-node-modules-
+
+            - name: Install dependencies
+              run: npm install
+
+            # OS-specific configurations
+            - name: Build & release app (Linux)
+              if: ${{ matrix.os == 'ubuntu-latest' }}
+              run: npm run build -- --publish always --linux
+              env:
+                  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+            - name: Build & release app (Windows)
+              if: ${{ matrix.os == 'windows-latest' }}
+              run: npm run build -- --publish always --win
+              env:
+                  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+            - name: Build & release app (MacOS)
+              if: ${{ matrix.os == 'macos-latest' }}
+              run: npm run build -- --publish always --mac
+              env:
+                  GH_TOKEN: ${{ secrets.GH_TOKEN }}
