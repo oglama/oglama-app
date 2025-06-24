@@ -49,10 +49,7 @@
         "linux": {
             "icon": "dist/res/icons/icon.png",
             "artifactName": "${productName}-${version}.${ext}",
-            "target": [
-                "AppImage",
-                "deb"
-            ],
+            "target": "deb",
             "category": "Utility",
             "maintainer": "Oglama <hello@oglama.com>",
             "description": "Private, community-driven web automation"
