@@ -23,7 +23,6 @@ This product uses third party software in accordance with their respective licen
   * **[debug](https://npmjs.com/package/debug)** `v.4.4.1` ⚖️ license: [MIT](./lic/debug.license.md) • author: Josh Junon (https://github.com/qix-)
   * **[electron-updater](https://npmjs.com/package/electron-updater)** `v.6.3.9` ⚖️ license: [MIT](./lic/electron-updater.license.md) • author: Vladimir Krivosheev
   * **[graceful-fs](https://npmjs.com/package/graceful-fs)** `v.4.2.11` ⚖️ license: [ISC](./lic/graceful-fs.license.md)
-  * **[howler](https://npmjs.com/package/howler)** `v.2.2.4` ⚖️ license: [MIT](./lic/howler.license.md) • author: James Simpson <james@goldfirestudios.com> (http://goldfirestudios.com)
   * **[js-yaml](https://npmjs.com/package/js-yaml)** `v.4.1.0` ⚖️ license: [MIT](./lic/js-yaml.license.md) • author: Vladimir Zapparov <dervus.grim@gmail.com>
   * **[lazy-val](https://npmjs.com/package/lazy-val)** `v.1.0.5` ⚖️ license: [MIT](./lic/lazy-val.license.md) • author: Vladimir Krivosheev
   * **[lodash.escaperegexp](https://npmjs.com/package/lodash.escaperegexp)** `v.4.1.2` ⚖️ license: [MIT](./lic/lodash.escaperegexp.license.md) • author: John-David Dalton <john.david.dalton@gmail.com> (http://allyoucanleet.com/)
