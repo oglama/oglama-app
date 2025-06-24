@@ -1,6 +1,6 @@
 {
     "name": "oglama.com",
-    "version": "0.0.114",
+    "version": "0.0.115",
     "description": "Private, community-driven web automation",
     "author": "Oglama",
     "license": "Apache-2.0",
@@ -16,7 +16,7 @@
         "asar": true,
         "appId": "Oglama",
         "productName": "Oglama",
-        "copyright": "Copyright © 2024-2025 Oglama",
+        "copyright": "Copyright © 2024-2025 Oglama https://oglama.com",
         "directories": {
             "output": "out"
         },
@@ -49,7 +49,10 @@
         "linux": {
             "icon": "dist/res/icons/icon.png",
             "artifactName": "${productName}-${version}.${ext}",
-            "target": ["AppImage", "deb"],
+            "target": [
+                "AppImage",
+                "deb"
+            ],
             "category": "Utility",
             "maintainer": "Oglama <hello@oglama.com>",
             "description": "Private, community-driven web automation"
