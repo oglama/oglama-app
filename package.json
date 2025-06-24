@@ -1,8 +1,8 @@
 {
-    "name": "oglama.com",
+    "name": "oglama",
     "version": "0.0.115",
     "description": "Private, community-driven web automation",
-    "author": "Oglama",
+    "author": "Oglama (https://oglama.com)",
     "license": "Apache-2.0",
     "private": true,
     "main": "run.js",
@@ -14,9 +14,9 @@
     },
     "build": {
         "asar": true,
-        "appId": "Oglama",
+        "appId": "com.oglama",
         "productName": "Oglama",
-        "copyright": "Copyright © 2024-2025 Oglama https://oglama.com",
+        "copyright": "Copyright © 2024-2025 Oglama (https://oglama.com)",
         "directories": {
             "output": "out"
         },
