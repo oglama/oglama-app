@@ -60,7 +60,6 @@
             "shortcutName": "Oglama",
             "installerIcon": "dist/res/icons/icon.ico",
             "uninstallerIcon": "dist/res/icons/icon.ico",
-            "deleteAppDataOnUninstall": true,
             "createDesktopShortcut": false,
             "createStartMenuShortcut": true
         },
