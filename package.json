@@ -58,7 +58,6 @@
             "oneClick": true,
             "perMachine": false,
             "shortcutName": "Oglama",
-            "requestedExecutionLevel": "user",
             "installerIcon": "dist/res/icons/icon.ico",
             "uninstallerIcon": "dist/res/icons/icon.ico",
             "deleteAppDataOnUninstall": true,
