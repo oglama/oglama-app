@@ -55,13 +55,14 @@
             "description": "Private, community-driven web automation"
         },
         "nsis": {
-            "oneClick": false,
+            "oneClick": true,
             "perMachine": false,
-            "allowElevation": false,
+            "shortcutName": "Oglama",
             "requestedExecutionLevel": "user",
             "installerIcon": "dist/res/icons/icon.ico",
             "uninstallerIcon": "dist/res/icons/icon.ico",
-            "createDesktopShortcut": true,
+            "deleteAppDataOnUninstall": true,
+            "createDesktopShortcut": false,
             "createStartMenuShortcut": true
         },
         "publish": [
