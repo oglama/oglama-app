@@ -4,8 +4,8 @@ srcStateMachine:
     code: |
       // Start testing
       if ($.args.length && $.args[0]) {
-      	$.log(`Returned successfully from ${$.previous}`, "success");
-      	return;
+        $.log(`Returned successfully from ${$.previous}`, "success");
+        return;
       }
 
       $.log("Testing started...", "success");
@@ -78,20 +78,20 @@ srcFunctions:
       $.log("Loading about:home");
       await $.navLoad("about:home");
       if (!(await $.navGetUrl()).match(/^about:home\/?$/g)) {
-      	throw new Error("Could not load about:home");
+        throw new Error("Could not load about:home");
       }
 
       // Go to the test page
       $.log("Loading about:home/test");
       await $.navLoad("about:home/test");
       if (!(await $.navGetUrl()).match(/^about:home\/test\/?$/g)) {
-      	throw new Error("Could not load about:home/test");
+        throw new Error("Could not load about:home/test");
       }
 
       // Get the page title
       const pageTitle = await $.navGetTitle();
       if ("string" !== typeof pageTitle || !pageTitle.match(/^breadboard/gi)) {
-      	throw new Error("$.navGetTitle failed");
+        throw new Error("$.navGetTitle failed");
       }
 
       // Take focus
@@ -103,21 +103,21 @@ srcFunctions:
       $.log("Back to about:home");
       await $.navGoBack();
       if (!(await $.navGetUrl()).match(/^about:home\/?$/g)) {
-      	throw new Error("Could not go back to about:home");
+        throw new Error("Could not go back to about:home");
       }
 
       // Go forward
       $.log("Forward to about:home/test");
       await $.navGoForward();
       if (!(await $.navGetUrl()).match(/^about:home\/test\/?$/g)) {
-      	throw new Error("Could not go forward to about:home/test");
+        throw new Error("Could not go forward to about:home/test");
       }
 
       // Reload the page
       $.log("Reloading");
       await $.navReload();
       if (!(await $.navGetUrl()).match(/^about:home\/test\/?$/g)) {
-      	throw new Error("Could not reload");
+        throw new Error("Could not reload");
       }
   - id: mac6w5azp93pxm619nn
     key: test-jiggle
@@ -130,7 +130,7 @@ srcFunctions:
       // Move mouse to center
       const viewportSize = await $.doGetViewportSize();
       if (!Number.isInteger(viewportSize.width) || !Number.isInteger(viewportSize.height)) {
-      	throw new Error("$.doGetViewportSize failed");
+        throw new Error("$.doGetViewportSize failed");
       }
       const left = viewportSize.width / 2;
       const top = viewportSize.height / 2;
@@ -148,29 +148,29 @@ srcFunctions:
       $.log("Testing $.globalRun*, $.pause, $.sleep");
 
       if (123 !== $.args[0]) {
-      	throw new Error("Arguments were not passed to this function");
+        throw new Error("Arguments were not passed to this function");
       }
 
       if (!$.globalRunGet("agreed")) {
-      	$.globalRunSet("agreed", true);
+        $.globalRunSet("agreed", true);
 
-      	// Pause the script
-      	$.log("Waiting for user to resume");
-      	$.pause("Testing the pause functionality. Unpause the agent when you're ready.");
+        // Pause the script
+        $.log("Waiting for user to resume");
+        $.pause("Testing the pause functionality. Unpause the agent when you're ready.");
 
-      	// Test the sleep function
-      	const startTime = new Date().getTime();
-      	await $.sleep(500);
-      	if (new Date().getTime() - startTime < 500) {
-      		throw new Error("$.sleep has failed");
-      	}
+        // Test the sleep function
+        const startTime = new Date().getTime();
+        await $.sleep(500);
+        if (new Date().getTime() - startTime < 500) {
+          throw new Error("$.sleep has failed");
+        }
       }
 
       // Delete a value
       $.globalRunSet("random", Math.random());
       $.globalRunSet("random", null);
       if (Object.keys($.globalRunGet()).includes("random")) {
-      	throw new Error("$.globalRunSet failed to delete key");
+        throw new Error("$.globalRunSet failed to delete key");
       }
   - id: m9vgq0xkehjsf4scjx
     key: test-box
@@ -182,7 +182,7 @@ srcFunctions:
       // Fetch the box
       const box = await $.doGetBox(inputKey);
       if (null === box) {
-      	throw new Error("$.doGetBox failed");
+        throw new Error("$.doGetBox failed");
       }
 
       // Modify the box somehow
@@ -201,27 +201,27 @@ srcFunctions:
 
       // Cache miss
       if ("string" !== typeof savedWord || today !== savedDay) {
-      	const llmWord = await $.llm(
-      		`Given that today is ${today}, give me a word representing a figure, event or object that is significant for today. Answer with just 1 word.`
-      	);
-      	if ("string" !== typeof llmWord) {
-      		throw new Error("$.llm failed");
-      	}
-      	$.globalEnvSet("word", llmWord);
-      	$.globalEnvSet("word-day", today);
+        const llmWord = await $.llm(
+          `Given that today is ${today}, give me a word representing a figure, event or object that is significant for today. Answer with just 1 word.`
+        );
+        if ("string" !== typeof llmWord) {
+          throw new Error("$.llm failed");
+        }
+        $.globalEnvSet("word", llmWord);
+        $.globalEnvSet("word-day", today);
       }
 
       // Delete a value
       $.globalEnvSet("random", Math.random());
       $.globalEnvSet("random", null);
       if (Object.keys($.globalEnvGet()).includes("random")) {
-      	throw new Error("$.globalEnvSet failed to delete key");
+        throw new Error("$.globalEnvSet failed to delete key");
       }
 
       // Re-fetch the word
       savedWord = $.globalEnvGet("word");
       if ("string" !== typeof savedWord) {
-      	throw new Error("$.globalEnvSet failed");
+        throw new Error("$.globalEnvSet failed");
       }
 
       return savedWord;
@@ -237,7 +237,7 @@ srcFunctions:
       await $.doType(textfieldKey, "def");
 
       if ("abcdef" !== (await $.doGetValue(textfieldKey))) {
-      	throw new Error("$.doType append failed in TextField");
+        throw new Error("$.doType append failed in TextField");
       }
 
       $.tick("success");
@@ -253,7 +253,7 @@ srcFunctions:
       await $.doType(inputKey, "abc");
       await $.doType(inputKey, "foobar", true);
       if ("foobar" !== (await $.doGetValue(inputKey))) {
-      	throw new Error("$.doType replace failed in input[type=text]");
+        throw new Error("$.doType replace failed in input[type=text]");
       }
 
       // Fetch the box
@@ -262,7 +262,7 @@ srcFunctions:
       // Type in the middle of the box
       await $.doTypeAt(left + width / 2, top + height / 2, "baz", true);
       if ("baz" !== (await $.doGetValue(inputKey))) {
-      	throw new Error("$.doTypeAt replace failed in input[type=text]");
+        throw new Error("$.doTypeAt replace failed in input[type=text]");
       }
 
       $.tick("success");
@@ -275,18 +275,18 @@ srcFunctions:
       await $.doHighlight(textfieldMultiKey, true);
 
       const text = Array.from({ length: 20 }, (_, i) => i + 1)
-      	.map(i => `${i}.	Șș好的 Lorem ipsum. ✨\n`)
-      	.join("");
+        .map(i => `${i}.	Șș好的 Lorem ipsum. ✨\n`)
+        .join("");
       await $.doType(textfieldMultiKey, text, true, 250);
 
       if (!(await $.doGetValue(textfieldMultiKey)).match(/20\.\t/g)) {
-      	throw new Error("$.doType failed in textarea");
+        throw new Error("$.doType failed in textarea");
       }
 
       // Append text
       await $.doType(textfieldMultiKey, "foobar", false);
       if (!(await $.doGetValue(textfieldMultiKey)).match(/20\.\t.*?foobar$/gms)) {
-      	throw new Error("$.doType append failed in textarea");
+        throw new Error("$.doType append failed in textarea");
       }
 
       $.tick("success");
@@ -299,17 +299,17 @@ srcFunctions:
       await $.doHighlight(textareaKey, true);
 
       const text = Array.from({ length: 20 }, (_, i) => i + 1)
-      	.map(i => `${i}.	Șș好的 Lorem ipsum. ✨\n`)
-      	.join("");
+        .map(i => `${i}.	Șș好的 Lorem ipsum. ✨\n`)
+        .join("");
       await $.doType(textareaKey, text, true, 250);
 
       if (!(await $.doGetValue(textareaKey)).match(/20\.\t/g)) {
-      	throw new Error("$.doType failed in textarea");
+        throw new Error("$.doType failed in textarea");
       }
 
       await $.doType(textareaKey, text, true);
       if ((await $.doGetValue(textareaKey)).match(/20\.\t.*?20\.\t/gms)) {
-      	throw new Error("$.doType replace failed in textarea");
+        throw new Error("$.doType replace failed in textarea");
       }
 
       $.tick("success");
@@ -327,7 +327,7 @@ srcFunctions:
       await $.doClick(await $.doQuery('[data-role="prompt"]'));
       const promptResult = await $.doGetContent(await $.doQuery('[data-role="prompt-result"]'));
       if ("foo" !== promptResult) {
-      	throw new Error(`$.handlePrompt failed - found ${promptResult}`);
+        throw new Error(`$.handlePrompt failed - found ${promptResult}`);
       }
 
       // Prevent the next confirm from bubbling
@@ -335,13 +335,13 @@ srcFunctions:
       await $.doClick(await $.doQuery('[data-role="confirm"]'));
       let confirmResult = await $.doGetContent(await $.doQuery('[data-role="confirm-result"]'));
       if ("true" !== confirmResult) {
-      	throw new Error(`$.handleConfirm failed - found ${confirmResult} instead of true`);
+        throw new Error(`$.handleConfirm failed - found ${confirmResult} instead of true`);
       }
       await $.handleConfirm(false);
       await $.doClick(await $.doQuery('[data-role="confirm"]'));
       confirmResult = await $.doGetContent(await $.doQuery('[data-role="confirm-result"]'));
       if ("false" !== confirmResult) {
-      	throw new Error(`$.handleConfirm failed - found ${confirmResult} instead of false`);
+        throw new Error(`$.handleConfirm failed - found ${confirmResult} instead of false`);
       }
 
       // Show two toasts
@@ -360,29 +360,29 @@ srcFunctions:
       // Fetch the span
       const clickedButton = await $.doQuery(".clicked-button");
       if (null === clickedButton) {
-      	throw new Error("$.doQuery could not find .clicked-button span");
+        throw new Error("$.doQuery could not find .clicked-button span");
       }
 
       // Click the MUI button
       const fooButton = await $.doQuery(".MuiButton-root", "foo");
       if (null === fooButton) {
-      	throw new Error("$.doQuery could not find 'foo' button");
+        throw new Error("$.doQuery could not find 'foo' button");
       }
       await $.doClick(fooButton);
       const resMuiButton = await $.doGetContent(clickedElKey);
       if ("foo" !== resMuiButton) {
-      	throw new Error("$.doClick failed on 'foo' button");
+        throw new Error("$.doClick failed on 'foo' button");
       }
 
       // Click the HTML button
       const alphaButton = await $.doQuery("button", "alpha");
       if (null === alphaButton) {
-      	throw new Error("$.doQuery could not find 'alpha' MUI button");
+        throw new Error("$.doQuery could not find 'alpha' MUI button");
       }
       await $.doClick(alphaButton);
       const resHtmlButton = await $.doGetContent(clickedElKey);
       if ("alpha" !== resHtmlButton) {
-      	throw new Error("$.doClick failed on 'alpha' HTML button");
+        throw new Error("$.doClick failed on 'alpha' HTML button");
       }
   - id: maayhf1ol8duj90otig
     key: test-query-parent
@@ -393,17 +393,17 @@ srcFunctions:
       const switchKey = await $.doQuery("input[name='s1'][value='1']");
       const switchAttrs = await $.doGetAttributes(switchKey);
       if ("object" !== typeof switchAttrs || null === switchAttrs || "1" !== switchAttrs.value) {
-      	throw new Error("$.doGetAttributes failed");
+        throw new Error("$.doGetAttributes failed");
       }
 
       // Find a vague parent
       const parentKey = await $.doQueryParent(switchKey, "div", "Switches");
       if ("string" !== typeof parentKey) {
-      	throw new Error("$.doQueryParent failed");
+        throw new Error("$.doQueryParent failed");
       }
       const parentAttr = await $.doGetAttribute(parentKey, "data-stack");
       if ("switches" !== parentAttr) {
-      	throw new Error("$.doGetAttribute failed");
+        throw new Error("$.doGetAttribute failed");
       }
   - id: madi51s23i44fuas3r2
     key: test-query-siblings
@@ -417,14 +417,14 @@ srcFunctions:
       // Find the siblings
       const switchSiblings = await $.doQuerySiblings(switchMuiKey, "span");
       if (3 !== switchSiblings.length) {
-      	throw new Error("$.doQuerySiblings failed");
+        throw new Error("$.doQuerySiblings failed");
       }
       for (const siblingKey of switchSiblings) {
-      	const checkboxKey = await $.doQuery("input[type='checkbox']", null, siblingKey);
-      	const siblingValue = await $.doGetAttribute(checkboxKey, "value");
-      	if ("1" === siblingValue) {
-      		throw new Error("$.doQuerySiblings captured self as sibling");
-      	}
+        const checkboxKey = await $.doQuery("input[type='checkbox']", null, siblingKey);
+        const siblingValue = await $.doGetAttribute(checkboxKey, "value");
+        if ("1" === siblingValue) {
+          throw new Error("$.doQuerySiblings captured self as sibling");
+        }
       }
   - id: m9vf8pylywlh2f14c5k
     key: test-io
@@ -434,27 +434,27 @@ srcFunctions:
       // Input integer
       const inputInt = $.ioInputInt("int");
       if (!Number.isInteger(inputInt)) {
-      	throw new Error(`$.ioInputInt returned wrong type: ${typeof inputInt}`);
+        throw new Error(`$.ioInputInt returned wrong type: ${typeof inputInt}`);
       }
       await $.ioOutputInt("int", inputInt + Math.floor(Math.random() * 100));
 
       // Input string
       const inputString = $.ioInputString("string");
       if ("string" !== typeof inputString) {
-      	throw new Error(`$.ioInputString returned wrong type: ${typeof inputString}`);
+        throw new Error(`$.ioInputString returned wrong type: ${typeof inputString}`);
       }
       await $.ioOutputString("string", `${inputString} ${Math.random()}`);
 
       // Optional input string
       const optionalString = $.ioInputString("optional");
       if ("string" !== typeof optionalString || !optionalString.length) {
-      	throw new Error("String with default value cannot be empty");
+        throw new Error("String with default value cannot be empty");
       }
 
       // Input boolean
       const inputBool = $.ioInputBool("bool");
       if ("boolean" !== typeof inputBool) {
-      	throw new Error(`$.ioInputBool returned wrong type: ${typeof inputBool}`);
+        throw new Error(`$.ioInputBool returned wrong type: ${typeof inputBool}`);
       }
       await $.ioOutputBool("bool", !!Math.floor(Math.random() * 2));
 
@@ -462,34 +462,34 @@ srcFunctions:
       let row = null;
       let rowCount = 0;
       while ((row = await $.ioInputRow("table"))) {
-      	rowCount++;
-      	if ("string" !== typeof row.subject) {
-      		throw new Error("$.ioInputRow - invalid table definition");
-      	}
-      	const subject = row.subject;
-      	const joke = await $.llm(`Tell me a short joke about ${subject} and one other random subject`);
-      	await $.ioOutputRow("table", { subject, joke });
+        rowCount++;
+        if ("string" !== typeof row.subject) {
+          throw new Error("$.ioInputRow - invalid table definition");
+        }
+        const subject = row.subject;
+        const joke = await $.llm(`Tell me a short joke about ${subject} and one other random subject`);
+        await $.ioOutputRow("table", { subject, joke });
       }
       if (0 === rowCount) {
-      	throw new Error("$.ioInputRow did not return any row");
+        throw new Error("$.ioInputRow did not return any row");
       }
 
       // Input files
       const inputFiles = $.ioInputFiles("files");
       if (!Array.isArray(inputFiles) || !inputFiles.length) {
-      	throw new Error("$.ioInputFiles did not return a valid array");
+        throw new Error("$.ioInputFiles did not return a valid array");
       }
 
       // Save an image
       const savePath = await $.ioSaveUrl("images", "http://localhost:7199/img/pages/page-404.png");
       if ("string" !== typeof savePath) {
-      	throw new Error("$.ioSaveUrl did not save the file to disk");
+        throw new Error("$.ioSaveUrl did not save the file to disk");
       }
   - id: mae6om1di0vraj77vf
     key: test-io-save
     code: |
       if (!(await $.navGetUrl()).match(/test/g)) {
-      	await $.navLoad("about:home/test/");
+        await $.navLoad("about:home/test/");
       }
 
       $.log("Testing $.ioSaveText for json");
@@ -499,25 +499,25 @@ srcFunctions:
       $.log("Testing $.ioSaveDownload for png");
       const srcButton = await $.doQuery('[data-role="dl-logo"]');
       $.setTimeout(async () => {
-      	await $.doClick(srcButton);
+        await $.doClick(srcButton);
       }, 1000);
       const savePath = await $.ioSaveDownload("images");
       if ("string" !== typeof savePath) {
-      	throw new Error("$.ioSaveDownload failed");
+        throw new Error("$.ioSaveDownload failed");
       }
       await $.sleep(1000);
 
       $.log("Testing $.ioSaveUrl for png");
       const urlPath = await $.ioSaveUrl("images", "http://localhost:7199/img/pages/page-401.png");
       if ("string" !== typeof urlPath) {
-      	throw new Error("$.ioSaveUrl failed");
+        throw new Error("$.ioSaveUrl failed");
       }
       await $.sleep(1000);
 
       $.log("Testing $.ioSaveRequest for json");
       const reqPath = await $.ioSaveRequest("binary", "http://localhost:7199/manifest.json");
       if ("string" !== typeof reqPath) {
-      	throw new Error("$.ioSaveRequest failed");
+        throw new Error("$.ioSaveRequest failed");
       }
       await $.sleep(1000);
   - id: mb11hk1cgip3xel81x
@@ -528,12 +528,12 @@ srcFunctions:
 
       const resJSON = await $.doRequest(url);
       if ("object" !== typeof resJSON || null == resJSON || "Oglama" !== resJSON.name) {
-      	throw new Error("$.doRequest failed for JSON response");
+        throw new Error("$.doRequest failed for JSON response");
       }
 
       const resString = await $.doRequest(url, "GET", null, null, false);
       if ("string" !== typeof resString || !resString.length || !resString.match(/"Oglama"/g)) {
-      	throw new Error("$.doRequest failed for string response");
+        throw new Error("$.doRequest failed for string response");
       }
   - id: ma87gt30m7walok5peq
     key: test-select
@@ -545,7 +545,7 @@ srcFunctions:
       await $.doSelect(simpleSelect, 8);
       const simpleSelectValue = await $.doGetValue(simpleSelect);
       if ("8" !== simpleSelectValue) {
-      	throw new Error("$.doSelect failed for a single value");
+        throw new Error("$.doSelect failed for a single value");
       }
 
       // Select a multiple values
@@ -553,7 +553,7 @@ srcFunctions:
       await $.doSelect(multiSelect, [3, 15]);
       const multiSelectValue = await $.doGetValue(multiSelect);
       if (!Array.isArray(multiSelectValue) || "3,15" !== multiSelectValue.join(",")) {
-      	throw new Error("$.doSelect failed for multiple values");
+        throw new Error("$.doSelect failed for multiple values");
       }
   - id: ma8g1lied1t731oe2q7
     key: test-checkbox
@@ -565,7 +565,7 @@ srcFunctions:
       await $.doCheck(muiCheckbox, [2, 4]);
       const muiCheckboxValue = await $.doGetValue(muiCheckbox);
       if (!Array.isArray(muiCheckboxValue) || "2,4" !== muiCheckboxValue.join(",")) {
-      	throw new Error("$.check failed for MUI checkbox");
+        throw new Error("$.check failed for MUI checkbox");
       }
 
       // HTML checkboxes
@@ -573,7 +573,7 @@ srcFunctions:
       await $.doCheck(htmlCheckbox, [2, 4]);
       const htmlCheckboxValue = await $.doGetValue(htmlCheckbox);
       if (!Array.isArray(htmlCheckboxValue) || "2,4" !== htmlCheckboxValue.join(",")) {
-      	throw new Error("$.check failed for HTML checkbox");
+        throw new Error("$.check failed for HTML checkbox");
       }
   - id: ma99xsi11nej87mux9i
     key: test-radio
@@ -585,7 +585,7 @@ srcFunctions:
       await $.doCheck(muiRadio, 2);
       const muiRadioValue = await $.doGetValue(muiRadio);
       if ("2" !== muiRadioValue) {
-      	throw new Error("$.check failed for MUI radio");
+        throw new Error("$.check failed for MUI radio");
       }
 
       // HTML radios
@@ -593,7 +593,7 @@ srcFunctions:
       await $.doCheck(htmlRadio, 2);
       const htmlRadioValue = await $.doGetValue(htmlRadio);
       if ("2" !== htmlRadioValue) {
-      	throw new Error("$.check failed for HTML radio");
+        throw new Error("$.check failed for HTML radio");
       }
   - id: ma9hgs9hy8sjbl9cor
     key: test-await-present
@@ -606,33 +606,33 @@ srcFunctions:
       // Automatically hide alert if present
       const elKey = await $.doQuery(cssSelector);
       if (null !== elKey) {
-      	await $.doClick(btnToggle);
+        await $.doClick(btnToggle);
       }
 
       // Wait for element present
       $.setTimeout(async () => await $.doClick(btnToggle), 1000);
       const alertPresent = await $.doAwaitPresent(cssSelector, null, null, 5);
       if (!Array.isArray(alertPresent)) {
-      	throw new Error("$.doAwaitPresent failed");
+        throw new Error("$.doAwaitPresent failed");
       }
 
       // Timeout on "element not present"
       const checkPresent = await $.doAwaitNotPresent(alertPresent[0], 1);
       if (false !== checkPresent) {
-      	throw new Error("$.doAwaitNotPresent did not time out");
+        throw new Error("$.doAwaitNotPresent did not time out");
       }
 
       // Wait for element not present
       $.setTimeout(async () => await $.doClick(btnToggle), 1000);
       const resRemoved = await $.doAwaitNotPresent(alertPresent[0], 5);
       if (!resRemoved) {
-      	throw new Error("$.doAwaitNotPresent failed");
+        throw new Error("$.doAwaitNotPresent failed");
       }
 
       // Timeout on "element present"
       const recheckPresent = await $.doAwaitPresent(cssSelector, null, null, 1);
       if (false !== recheckPresent) {
-      	throw new Error("$.doAwaitPresent did not time out");
+        throw new Error("$.doAwaitPresent did not time out");
       }
   - id: ma9nnox91osubfphnqj
     key: test-await-visible
@@ -645,33 +645,33 @@ srcFunctions:
       // Automatically hide alert if visible
       let alertVisible = await $.doGetVisible(elKey);
       if (alertVisible) {
-      	await $.doClick(btnToggle);
+        await $.doClick(btnToggle);
       }
 
       // Wait for elKey visible
       $.setTimeout(async () => await $.doClick(btnToggle), 1000);
       alertVisible = await $.doAwaitVisible(elKey, 5);
       if (!alertVisible) {
-      	throw new Error("$.doAwaitVisible failed");
+        throw new Error("$.doAwaitVisible failed");
       }
 
       // Timeout on "element not visible"
       const checkVisible = await $.doAwaitNotVisible(elKey, 1);
       if (false !== checkVisible) {
-      	throw new Error("$.doAwaitNotVisible did not time out");
+        throw new Error("$.doAwaitNotVisible did not time out");
       }
 
       // Wait for elKey not visible
       $.setTimeout(async () => await $.doClick(btnToggle), 1000);
       const resHidden = await $.doAwaitNotVisible(elKey, 5);
       if (!resHidden) {
-      	throw new Error("$.doAwaitNotVisible failed");
+        throw new Error("$.doAwaitNotVisible failed");
       }
 
       // Timeout on "element visible"
       const recheckVisible = await $.doAwaitVisible(elKey, 1);
       if (false !== recheckVisible) {
-      	throw new Error("$.doAwaitVisible did not time out");
+        throw new Error("$.doAwaitVisible did not time out");
       }
   - id: mac7jezsj8jigbrd20p
     key: test-coordinate-actions
@@ -689,16 +689,16 @@ srcFunctions:
       await $.doHoverAt(50, 20);
       const element = await $.doQueryAt(50, 20, "h2");
       if (null === element) {
-      	throw new Error("$.doQueryAt failed");
+        throw new Error("$.doQueryAt failed");
       }
 
       // It's clear the element is in viewport
       if (!(await $.doGetInViewport(element))) {
-      	throw new Error("$.doGetInViewport failed - buttons heading is in viewport");
+        throw new Error("$.doGetInViewport failed - buttons heading is in viewport");
       }
 
       if (await $.doGetInViewport(await $.doQuery("h1"))) {
-      	throw new Error("$.doGetInViewport failed - breadboard heading is not in viewport");
+        throw new Error("$.doGetInViewport failed - breadboard heading is not in viewport");
       }
 
       await $.doClickAt(50, 20, true);
@@ -716,11 +716,11 @@ srcFunctions:
       // Fetch input
       const filePaths = $.ioInputFiles("files");
       if (filePaths.length) {
-      	await $.doChooseFiles(filesKey, filePaths);
-      	const filesValue = await $.doGetValue(filesKey);
-      	if (filePaths.length !== filesValue.length) {
-      		throw new Error("$.doChooseFiles failed");
-      	}
+        await $.doChooseFiles(filesKey, filePaths);
+        const filesValue = await $.doGetValue(filesKey);
+        if (filePaths.length !== filesValue.length) {
+          throw new Error("$.doChooseFiles failed");
+        }
       }
 srcInputs:
   - id: m7qi5iyhz1w7gfvlv0t
@@ -756,8 +756,8 @@ srcInputs:
   - id: m7ni5gtp7yaxccnjxty
     key: table
     type: table
-    name: Number of stuff
-    desc: This is the number of stuff we need
+    name: Subjects
+    desc: A list of subjects
     columns:
       - subject
   - id: m7qhpfss87pedgw80w3
