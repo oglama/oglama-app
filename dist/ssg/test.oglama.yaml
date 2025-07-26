@@ -708,7 +708,7 @@ srcFunctions:
     code: |
       $.log("Testing $.doChooseFiles");
 
-      const filesKey = await $.doQuery("input[type='file']");
+      const filesKey = await $.doQuery("[data-this='target']");
 
       // Bring into view
       await $.doScrollTo(filesKey);
