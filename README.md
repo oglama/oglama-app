@@ -6,7 +6,7 @@ Private, community-driven web automation.
 
 Just create an account at [Oglama](https://oglama.com/) and follow the on-screen instructions.
 
-To install an older version, visit the [Releases](https://github.com/oglama/oglama-app/releases) page and download the appropriate installer.
+To install an older version, visit the [Releases](https://github.com/oglama/oglama/releases) page and download the appropriate installer.
 
 ### Nightly Builds
 
