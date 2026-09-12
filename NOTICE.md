@@ -31,7 +31,7 @@ This product uses third party software in accordance with their respective licen
   * **[cross-spawn](https://npmjs.com/package/cross-spawn)** `v.7.0.6` ⚖️ license: MIT • author: André Cruz <andre@moxy.studio>
   * **[date-fns](https://npmjs.com/package/date-fns)** `v.2.30.0` ⚖️ license: MIT
   * **[electron](https://npmjs.com/package/electron)** `v.44.3.0` ⚖️ license: MIT • author: Electron Community
-  * **[electron-builder](https://npmjs.com/package/electron-builder)** `v.26.15.7` ⚖️ license: MIT • author: Vladimir Krivosheev
+  * **[electron-builder](https://npmjs.com/package/electron-builder)** `v.26.16.1` ⚖️ license: MIT • author: Vladimir Krivosheev
   * **[esbuild](https://npmjs.com/package/esbuild)** `v.0.28.1` ⚖️ license: MIT
   * **[eslint](https://npmjs.com/package/eslint)** `v.8.57.1` ⚖️ license: MIT • author: Nicholas C. Zakas <nicholas+npm@nczconsulting.com>
   * **[eslint-config-google](https://npmjs.com/package/eslint-config-google)** `v.0.14.0` ⚖️ license: Apache-2.0 • author: Google

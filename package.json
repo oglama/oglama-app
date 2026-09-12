@@ -1,7 +1,7 @@
 {
     "name": "@uindow/cli",
     "mcpName": "io.github.uindow/uindow",
-    "version": "0.1.11",
+    "version": "0.1.12",
     "description": "CLI for Uindow",
     "author": "Uindow (https://uindow.com)",
     "license": "Apache-2.0",
@@ -105,7 +105,7 @@
         "@electron/asar": "4.2.1",
         "@uindow/css": "1.0.1",
         "cross-spawn": "7.0.6",
-        "electron-builder": "26.15.7",
+        "electron-builder": "26.16.1",
         "electron": "44.3.0",
         "eslint": "8.57.1",
         "eslint-config-google": "0.14.0",
