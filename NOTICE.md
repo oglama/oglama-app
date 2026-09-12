@@ -30,7 +30,7 @@ This product uses third party software in accordance with their respective licen
   * **[codemirror](https://npmjs.com/package/codemirror)** `v.5.65.19` ⚖️ license: MIT • author: Marijn Haverbeke <marijn@haverbeke.berlin> (http://marijnhaverbeke.nl)
   * **[cross-spawn](https://npmjs.com/package/cross-spawn)** `v.7.0.6` ⚖️ license: MIT • author: André Cruz <andre@moxy.studio>
   * **[date-fns](https://npmjs.com/package/date-fns)** `v.2.30.0` ⚖️ license: MIT
-  * **[electron](https://npmjs.com/package/electron)** `v.43.4.1` ⚖️ license: MIT • author: Electron Community
+  * **[electron](https://npmjs.com/package/electron)** `v.44.3.0` ⚖️ license: MIT • author: Electron Community
   * **[electron-builder](https://npmjs.com/package/electron-builder)** `v.26.15.7` ⚖️ license: MIT • author: Vladimir Krivosheev
   * **[esbuild](https://npmjs.com/package/esbuild)** `v.0.28.1` ⚖️ license: MIT
   * **[eslint](https://npmjs.com/package/eslint)** `v.8.57.1` ⚖️ license: MIT • author: Nicholas C. Zakas <nicholas+npm@nczconsulting.com>
@@ -51,7 +51,7 @@ This product uses third party software in accordance with their respective licen
   * **[jest](https://npmjs.com/package/jest)** `v.28.1.3` ⚖️ license: MIT
   * **[mdi-material-ui](https://npmjs.com/package/mdi-material-ui)** `v.7.9.4` ⚖️ license: MIT • author: Wertarbyte
   * **[mediabunny](https://npmjs.com/package/mediabunny)** `v.1.24.2` ⚖️ license: [MPL-2.0](./dist/lic/mediabunny.license.md) • author: Vanilagy
-  * **[next](https://npmjs.com/package/next)** `v.15.5.21` ⚖️ license: MIT
+  * **[next](https://npmjs.com/package/next)** `v.16.3.5` ⚖️ license: MIT
   * **[next-pwa](https://npmjs.com/package/next-pwa)** `v.5.6.0` ⚖️ license: MIT • author: ShadowWalker <w@weiw.io>
   * **[next-transpile-modules](https://npmjs.com/package/next-transpile-modules)** `v.10.0.1` ⚖️ license: MIT • author: Pierre de la Martinière <pierre.de.la.martiniere@gmail.com>
   * **[nodemon](https://npmjs.com/package/nodemon)** `v.3.1.10` ⚖️ license: MIT • author: Remy Sharp (https://github.com/remy)

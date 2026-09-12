@@ -1428,45 +1428,29 @@ srcOutputs:
 
 * * *
 
-A boolean output is the natural way to answer the single question a monitoring module exists to answer - is it available, did the check pass, was anything found - in a form another tool can act on without parsing text.  
-The type check is strict: `"yes"`, `1` and a non-null element key are all rejected and return `false` without writing anything. Convert with `!!` or an explicit comparison before calling, as the second state does.  
-In the Results tab a boolean output is drawn as a single green or red dot - one per run, since scalars are replaced within a run and kept separately across them. That makes it a good fit for the one headline verdict of a run, and it reads as a history of passes and failures once a module has run a few times.  
-Later calls replace earlier ones, so a value written optimistically at the start can be corrected once the run knows better.
+Boolean outputs are rendered as green or red dots in the `Results` tab.  
+Subsequent calls override previous values for each agent run.
 
 **example-ioOutputBoolean.js.yaml**
 ```yaml
 srcStateMachine:
   - key: start
     code: |
-      await $.navLoad("about:home/test/");
+      // Get the current minute
+      const minute = new Date().getMinutes();
 
-      // Report a yes/no finding for the run
-      const bannerKey = await $.doQuery("[data-role=out-of-stock]");
-      const inStock = null === bannerKey;
+      // This minute is even (divisible by 2)
+      const rightTime = 0 === minute % 2;
 
-      await $.ioOutputBoolean("in-stock", inStock);
-      $.log(inStock ? "In stock" : "Out of stock", inStock ? "success" : "warning");
-
-      return { next: "strict-types" };
-  - key: strict-types
-    code: |
-      // Only real booleans are stored - a truthy value is not enough.
-      // Passing an element key here returns false and writes nothing.
-      const bannerKey = await $.doQuery("[data-role=out-of-stock]");
-
-      if (!(await $.ioOutputBoolean("in-stock", bannerKey))) {
-        $.log("A non-boolean was rejected", "warning");
-      }
-
-      // Coerce first when the value came from something looser
-      await $.ioOutputBoolean("in-stock", !bannerKey);
+      // Save/override the result as a boolean flag
+      await $.ioOutputBoolean("right-time", rightTime);
 srcFunctions: []
 srcInputs: []
 srcOutputs:
-  - key: in-stock
+  - key: right-time
     type: boolean
-    name: In stock
-    desc: ""
+    name: Right time
+    desc: The agent ran at an even minute
 ```
 
 * * *
